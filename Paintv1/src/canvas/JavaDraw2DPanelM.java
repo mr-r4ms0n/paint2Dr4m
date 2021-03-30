@@ -67,6 +67,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     public static final int LIGHTNING = 18;
     public static final int SANDCLOCK = 19;
     public static final int STAR6 = 20;
+    public static final int SHARKASS = 21;
     public int shapeType = RECTANGLE;
     // vector of input points
     Vector points = new Vector();
@@ -205,6 +206,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
             case STAR6:
                 s = new Estrella6Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
                 break;
+            
         }
         if (s != null)
         {
@@ -413,6 +415,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 p = ev.getPoint();
                 g.draw(new Estrella6Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
                 break;
+           
         }
     }
 }
