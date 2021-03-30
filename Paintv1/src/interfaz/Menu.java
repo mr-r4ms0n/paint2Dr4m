@@ -603,7 +603,14 @@ public class Menu extends javax.swing.JFrame
         });
         jPanel3.add(jButton9);
 
-        jButton10.setText("jButton10");
+        jButton10.setText("Flecha Der");
+        jButton10.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton10ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton10);
 
         jButton11.setText("Rayo");
@@ -616,7 +623,14 @@ public class Menu extends javax.swing.JFrame
         });
         jPanel3.add(jButton11);
 
-        jButton12.setText("jButton12");
+        jButton12.setText("Reloj Arena");
+        jButton12.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton12ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton12);
 
         jButton13.setText("Estrella 6P");
@@ -686,7 +700,7 @@ public class Menu extends javax.swing.JFrame
         javaDraw2DPanelM2.setLayout(javaDraw2DPanelM2Layout);
         javaDraw2DPanelM2Layout.setHorizontalGroup(
             javaDraw2DPanelM2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 875, Short.MAX_VALUE)
+            .addGap(0, 857, Short.MAX_VALUE)
         );
         javaDraw2DPanelM2Layout.setVerticalGroup(
             javaDraw2DPanelM2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -789,6 +803,16 @@ public class Menu extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButton13ActionPerformed
         javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.STAR6;
     }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton10ActionPerformed
+    {//GEN-HEADEREND:event_jButton10ActionPerformed
+        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.RIGHTARROW;
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton12ActionPerformed
+    {//GEN-HEADEREND:event_jButton12ActionPerformed
+        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.SANDCLOCK;
+    }//GEN-LAST:event_jButton12ActionPerformed
 
     /**
      * @param args the command line arguments
