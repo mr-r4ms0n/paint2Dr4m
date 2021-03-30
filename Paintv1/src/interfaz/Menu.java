@@ -606,13 +606,27 @@ public class Menu extends javax.swing.JFrame
         jButton10.setText("jButton10");
         jPanel3.add(jButton10);
 
-        jButton11.setText("jButton11");
+        jButton11.setText("Rayo");
+        jButton11.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton11ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton11);
 
         jButton12.setText("jButton12");
         jPanel3.add(jButton12);
 
-        jButton13.setText("jButton13");
+        jButton13.setText("Estrella 6P");
+        jButton13.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton13ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton13);
 
         jPanel4.setBackground(new java.awt.Color(255, 204, 204));
@@ -765,6 +779,16 @@ public class Menu extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButton9ActionPerformed
         javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.STAR4;
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton11ActionPerformed
+    {//GEN-HEADEREND:event_jButton11ActionPerformed
+        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.LIGHTNING;
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton13ActionPerformed
+    {//GEN-HEADEREND:event_jButton13ActionPerformed
+        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.STAR6;
+    }//GEN-LAST:event_jButton13ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -10,6 +10,8 @@ import figuras.Casa;
 import figuras.Diamante;
 import figuras.Estrella4Puntas;
 import figuras.Estrella5Puntas;
+import figuras.Estrella6Puntas;
+import figuras.Rayo;
 import figuras.Triangulo;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -60,6 +62,8 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     public static final int STAR5 = 15;
     public static final int STAR4 = 16;
 
+    public static final int LIGHTNING = 18;
+    public static final int STAR6 = 20;
     public int shapeType = RECTANGLE;
     // vector of input points
     Vector points = new Vector();
@@ -185,6 +189,14 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 break;
             case STAR4:
                 s = new Estrella4Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                break;
+
+            case LIGHTNING:
+                s = new Rayo(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                break;
+            
+            case STAR6:
+                s = new Estrella6Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
                 break;
         }
         if (s != null)
@@ -359,6 +371,24 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 }
                 p = ev.getPoint();
                 g.draw(new Estrella4Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                break;
+
+            case LIGHTNING:
+                if (p != null)
+                {
+                    g.draw(new Rayo(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                }
+                p = ev.getPoint();
+                g.draw(new Rayo(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                break;
+            
+            case STAR6:
+                if (p != null)
+                {
+                    g.draw(new Estrella6Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                }
+                p = ev.getPoint();
+                g.draw(new Estrella6Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
                 break;
         }
     }
