@@ -603,7 +603,14 @@ public class Menu extends javax.swing.JFrame
         });
         jPanel3.add(jButton9);
 
-        jButton10.setText("jButton10");
+        jButton10.setText("Flecha Der");
+        jButton10.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton10ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton10);
 
         jButton11.setText("jButton11");
@@ -765,6 +772,11 @@ public class Menu extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButton9ActionPerformed
         javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.STAR4;
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton10ActionPerformed
+    {//GEN-HEADEREND:event_jButton10ActionPerformed
+        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.RIGHTARROW;
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
      * @param args the command line arguments

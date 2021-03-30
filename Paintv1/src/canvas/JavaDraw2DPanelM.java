@@ -10,6 +10,7 @@ import figuras.Casa;
 import figuras.Diamante;
 import figuras.Estrella4Puntas;
 import figuras.Estrella5Puntas;
+import figuras.FlechaDer;
 import figuras.Triangulo;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -59,6 +60,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     public static final int DIAMOND = 14;
     public static final int STAR5 = 15;
     public static final int STAR4 = 16;
+    public static final int RIGHTARROW = 17;
 
     public int shapeType = RECTANGLE;
     // vector of input points
@@ -185,6 +187,9 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 break;
             case STAR4:
                 s = new Estrella4Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                break;
+            case RIGHTARROW:
+                s = new FlechaDer(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
                 break;
         }
         if (s != null)
@@ -359,6 +364,14 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 }
                 p = ev.getPoint();
                 g.draw(new Estrella4Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                break;
+            case RIGHTARROW:
+                if (p != null)
+                {
+                    g.draw(new FlechaDer(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                }
+                p = ev.getPoint();
+                g.draw(new FlechaDer(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
                 break;
         }
     }
