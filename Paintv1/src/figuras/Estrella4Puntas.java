@@ -20,89 +20,106 @@ import java.awt.geom.Rectangle2D;
 public class Estrella4Puntas implements Shape
 {
 
-    Polygon triangulo = new Polygon();
-    int esqInfIzqX, esqInfIzqY, esqInfDerX, esqInfDerY, puntoSuperiorX, puntoSuperiorY;
-    double x, y, width, height;
+    Polygon path;
 
-    public Estrella4Puntas(double x1, double y1, double width, double height)
+    public Estrella4Puntas(double x, double y, double w, double h)
     {
-        //triangulo.translate((int) x1, (int) y1);
-        x = Math.min(x1, y1);
-        y = Math.min(y1, height);
-        width = Math.abs(x1 + width);
-        height = Math.abs(y1 + height);
-        esqInfIzqX = (int) x1;
-        esqInfIzqY = (int) height;
-        esqInfDerX = (int) width;
-        esqInfDerY = (int) height;
-        puntoSuperiorX = (int) (x1 + width) / 2;
-        puntoSuperiorY = (int) y1;
-        triangulo = new Polygon();
-      
-        triangulo.addPoint(puntoSuperiorX, puntoSuperiorY);
-        triangulo.addPoint(esqInfIzqX, esqInfIzqY);
-        triangulo.addPoint(esqInfDerX, esqInfDerY);
-        
+        //Puntos del diamante
+        //A
+        int x0 = (int) (x + 0.3f * w);
+        int y0 = (int) (y + 0f * h);
+        //E
+        int x1 = (int) (x + 0.2f * w);
+        int y1 = (int) (y + 0.2f * h);
+        //B
+        int x2 = (int) (x + 0.0f * w);
+        int y2 = (int) (y + 0.3 * h);
+        //H
+        int x3 = (int) (x + 0.2f * w);
+        int y3 = (int) (y + 0.4f * h);
+        //C
+        int x4 = (int) (x + 0.3f * w);
+        int y4 = (int) (y + 0.6f * h);
+        //G
+        int x5 = (int) (x + 0.4f * w);
+        int y5 = (int) (y + 0.4f * h);
+        //D
+        int x6 = (int) (x + 0.6f * w);
+        int y6 = (int) (y + 0.3f * h);
+        //F
+        int x7 = (int) (x + 0.4f * w);
+        int y7 = (int) (y + 0.2f * h);
+
+        int[] puntosX =
+        {
+            x0, x1, x2, x3, x4, x5, x6, x7
+        };
+        int[] puntosY =
+        {
+            y0, y1, y2, y3, y4, y5, y6, y7
+        };
+
+        path = new Polygon(puntosX, puntosY, 8);
     }
 
     @Override
     public boolean contains(Rectangle2D rect)
     {
-        return triangulo.contains(rect);
+        return path.contains(rect);
     }
 
     @Override
     public boolean contains(Point2D pd)
     {
-        return triangulo.contains(pd);
+        return path.contains(pd);
     }
 
     @Override
     public boolean contains(double x, double y)
     {
-        return triangulo.contains(x, y);
+        return path.contains(x, y);
     }
 
     @Override
     public boolean contains(double x, double y, double w, double h)
     {
-        return triangulo.contains(x, y, w, h);
+        return path.contains(x, y, w, h);
     }
 
     @Override
     public Rectangle getBounds()
     {
-        return triangulo.getBounds();
+        return path.getBounds();
     }
 
     @Override
     public Rectangle2D getBounds2D()
     {
-        return triangulo.getBounds2D();
+        return path.getBounds2D();
     }
 
     @Override
     public PathIterator getPathIterator(AffineTransform at)
     {
-        return triangulo.getPathIterator(at);
+        return path.getPathIterator(at);
     }
 
     @Override
     public PathIterator getPathIterator(AffineTransform at, double flatness)
     {
-        return triangulo.getPathIterator(at, flatness);
+        return path.getPathIterator(at, flatness);
     }
 
     @Override
     public boolean intersects(Rectangle2D rd)
     {
-        return triangulo.intersects(rd);
+        return path.intersects(rd);
     }
 
     @Override
     public boolean intersects(double x, double y, double w, double h)
     {
-        return triangulo.intersects(x, y, w, h);
+        return path.intersects(x, y, w, h);
     }
 
 }
