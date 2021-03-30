@@ -8,6 +8,7 @@ package canvas;
 import figuras.C1;
 import figuras.Casa;
 import figuras.Diamante;
+import figuras.Estrella5Puntas;
 import figuras.Triangulo;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -55,6 +56,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     public static final int BAT = 12;
     public static final int TRIANGLE = 13;
     public static final int DIAMOND = 14;
+    public static final int STAR5 =  15;
 
     public int shapeType = RECTANGLE;
     // vector of input points
@@ -175,6 +177,9 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 break;
             case DIAMOND:
                 s = new Diamante(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                break;
+            case STAR5:
+                s = new Estrella5Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
                 break;
         }
         if (s != null)
@@ -333,6 +338,14 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 }
                 p = ev.getPoint();
                 g.draw(new Diamante(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                break;
+            case STAR5:
+                 if (p != null)
+                {
+                    g.draw(new Estrella5Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                }
+                p = ev.getPoint();
+                g.draw(new Estrella5Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
                 break;
         }
     }

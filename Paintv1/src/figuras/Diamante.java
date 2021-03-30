@@ -31,7 +31,7 @@ public class Diamante implements Shape
         int x1 = (int) (x + 0f * w);
         int y1 = (int) (y + 0.5f * h);
         int x2 = (int) (x + 0.5f * w);
-        int y2 = (int) (y + 1f * w);
+        int y2 = (int) (y + 1f * h);
         int x3 = (int) (x + 1f * w);
         int y3 = (int) (y + 0.5f * h);
         

@@ -26,19 +26,31 @@ public class Estrella5Puntas implements Shape
     public Estrella5Puntas(float x, float y, float w, float h)
     {
         //Puntos del diamante
-        int x0 = (int) (x + 0.5f * w);
-        int y0 = (int) (y + 0f * h);
-        int x1 = (int) (x + 0f * w);
-        int y1 = (int) (y + 0.5f * h);
-        int x2 = (int) (x + 0.5f * w);
-        int y2 = (int) (y + 1f * w);
-        int x3 = (int) (x + 1f * w);
-        int y3 = (int) (y + 0.5f * h);
+        int x0 = (int) (x+1f*w);
+        int y0 = (int) (y+0f*h);
+        int x1 = (int) (x+0.8f*w);
+        int y1 = (int) (y+0.4f*h);
+        int x2 = (int) (x+0.2f*w);
+        int y2 = (int) (y+0.4f*h);
+        int x3 = (int) (x+0.6f*w);
+        int y3 = (int) (y+0.8f*h);
+        int x4 = (int) (x+0.4f*w);
+        int y4 = (int) (y+1.2f*h);
+        int x5 = (int) (x+1f*w);
+        int y5 = (int) (y+1f*h);
+        int x6 = (int) (x+1.6f*w);
+        int y6 = (int) (y+1.2*h);
+        int x7 = (int) (x+1.4f*w);
+        int y7 = (int) (y+0.8*h);
+        int x8 = (int) (x+1.8f*w);
+        int y8 = (int) (y+0.4f*h);
+        int x9 = (int) (x+1.2f*w);
+        int y9 =  (int) (y+0.4f*h);
         
-        int [] puntosX = {x0,x1,x2,x3};
-        int [] puntosY = {y0,y1,y2,y3};
+        int [] puntosX = {x0,x1,x2,x3,x4,x5,x6,x7,x8,x9};
+        int [] puntosY = {y0,y1,y2,y3,y4,y5,y6,y7,y8,y9};
         
-        path = new Polygon(puntosX, puntosY, 4);
+        path = new Polygon(puntosX, puntosY, 10);
         //path.addPoint(x0, y0);
         //path.addPoint(x1, y1);
         //path.addPoint(x2, y2);

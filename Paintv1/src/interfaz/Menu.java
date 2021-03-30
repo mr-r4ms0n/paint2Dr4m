@@ -583,7 +583,14 @@ public class Menu extends javax.swing.JFrame
         });
         jPanel3.add(jButton7);
 
-        jButton8.setText("jButton8");
+        jButton8.setText("Estrella 5P");
+        jButton8.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton8ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton8);
 
         jButton9.setText("jButton9");
@@ -658,7 +665,7 @@ public class Menu extends javax.swing.JFrame
         javaDraw2DPanelM2.setLayout(javaDraw2DPanelM2Layout);
         javaDraw2DPanelM2Layout.setHorizontalGroup(
             javaDraw2DPanelM2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 893, Short.MAX_VALUE)
+            .addGap(0, 875, Short.MAX_VALUE)
         );
         javaDraw2DPanelM2Layout.setVerticalGroup(
             javaDraw2DPanelM2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -741,6 +748,11 @@ public class Menu extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButton7ActionPerformed
         javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.DIAMOND;
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton8ActionPerformed
+    {//GEN-HEADEREND:event_jButton8ActionPerformed
+        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.STAR5;
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
