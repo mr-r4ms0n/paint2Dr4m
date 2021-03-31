@@ -5,6 +5,8 @@
  */
 package paintv1;
 
+import interfaz.Menu;
+
 /**
  *
  * @author kenit
@@ -17,7 +19,8 @@ public class Paintv1
      */
     public static void main(String[] args)
     {
-        // TODO code application logic here
+        new Menu().setVisible(true);
+        
     }
     
 }

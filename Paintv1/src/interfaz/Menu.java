@@ -11,7 +11,8 @@ package interfaz;
  */
 public class Menu extends javax.swing.JFrame
 {
-
+    public static boolean selected = false;
+    public static boolean selectedM = false;
     /**
      * Creates new form Menu
      */
@@ -89,6 +90,7 @@ public class Menu extends javax.swing.JFrame
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
+        jButton26 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         vPnlDatos = new javax.swing.JPanel();
         javaDraw2DPanelM2 = new canvas.JavaDraw2DPanelM();
@@ -369,6 +371,13 @@ public class Menu extends javax.swing.JFrame
 
         jToggleButton6.setText("Objeto");
         jToggleButton6.setToolTipText("Seleccion de un objeto");
+        jToggleButton6.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jToggleButton6ActionPerformed(evt);
+            }
+        });
 
         jToggleButton7.setText("Acumulada");
         jToggleButton7.setToolTipText("Seleccion Acumulada");
@@ -643,6 +652,16 @@ public class Menu extends javax.swing.JFrame
         });
         jPanel3.add(jButton13);
 
+        jButton26.setText("Murcielago");
+        jButton26.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton26ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton26);
+
         jPanel4.setBackground(new java.awt.Color(255, 204, 204));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Java2D Creadas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
@@ -814,6 +833,16 @@ public class Menu extends javax.swing.JFrame
         javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.SANDCLOCK;
     }//GEN-LAST:event_jButton12ActionPerformed
 
+    private void jToggleButton6ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jToggleButton6ActionPerformed
+    {//GEN-HEADEREND:event_jToggleButton6ActionPerformed
+        selected = true;
+    }//GEN-LAST:event_jToggleButton6ActionPerformed
+
+    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton26ActionPerformed
+    {//GEN-HEADEREND:event_jButton26ActionPerformed
+        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.BAT;
+    }//GEN-LAST:event_jButton26ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -879,6 +908,7 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
+    private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

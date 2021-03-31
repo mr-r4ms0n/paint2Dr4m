@@ -12,9 +12,12 @@ import figuras.Estrella4Puntas;
 import figuras.Estrella5Puntas;
 import figuras.Estrella6Puntas;
 import figuras.FlechaDer;
+import figuras.Murcielago;
 import figuras.Rayo;
 import figuras.RelojArena;
 import figuras.Triangulo;
+import interfaz.Menu;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -33,6 +36,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.QuadCurve2D;
 import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JPanel;
 
@@ -43,7 +47,7 @@ import javax.swing.JPanel;
 public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMotionListener
 {
 
-    private Vector shapes = new Vector();
+    ArrayList<MyShape> shapes = new ArrayList<>();
     public static final int RECTANGLE = 0;
     public static final int ROUNDRECTANGLE2D = 1;
     public static final int ELLIPSE2D = 2;
@@ -55,6 +59,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     public static final int GENERAL = 8;
     public static final int AREA = 9;
 
+    
     //Figuras propias
     public static final int HEART = 10;
     public static final int HOUSE = 11;
@@ -74,6 +79,8 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     int pointIndex = 0;
     Shape partialShape = null;
     Point p = null;
+    
+    Point selectedPoint;
 
     //Coordenadas para dibujar el plano cartesiano
     int alto = 1370;
@@ -98,8 +105,20 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         for (int i = 0; i < shapes.size(); i++)
         {
-            Shape s = (Shape) shapes.get(i);
+            Shape s = shapes.get(i).getShape();
             g2.draw(s);
+            if (shapes.get(i).getSelected())
+            {
+                float dash1[] = {10.0f};//la cantidad de largo de las lineas que se puntean
+                BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
+                g2.setStroke(dashed);
+                Rectangle rec= shapes.get(i).getShape().getBounds();
+                g2.setPaint(new Color(0, 80, 157));
+                g2.draw(shapes.get(i).getShape()); // we can draw the shape instead of the bounding rectangle
+                g2.draw(rec);
+                g2.setPaint(Color.black);
+                g2.setStroke(new BasicStroke(1));
+            }
         }
     }
 
@@ -120,6 +139,17 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
         points.add(ev.getPoint());
         pointIndex++;
         p = null;
+        selectedPoint = ev.getPoint();
+        if (Menu.selected)
+        {
+            for (int i = 0; i < shapes.size(); i++)
+            {
+                if (shapes.get(i).getShape().contains(selectedPoint))
+                {
+                    shapes.get(i).setSelected(true);
+                }
+            }
+        }
     }
 
     public void mouseReleased(MouseEvent ev)
@@ -128,6 +158,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
         Point p1 = (Point) (points.get(pointIndex - 1));
         p = ev.getPoint();
         Shape s = null;
+        
         switch (shapeType)
         {
             case RECTANGLE:
@@ -206,11 +237,15 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
             case STAR6:
                 s = new Estrella6Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
                 break;
+            case BAT:
+                s = new Murcielago(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                break;
             
         }
         if (s != null)
         {
-            shapes.add(s);
+            MyShape s1 = new MyShape(s,null);
+            shapes.add(s1);
             points.clear();
             pointIndex = 0;
             p = null;
@@ -415,7 +450,14 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 p = ev.getPoint();
                 g.draw(new Estrella6Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
                 break;
-           
+            case BAT:
+                if (p != null)
+                {
+                    g.draw(new Murcielago(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                }
+                p = ev.getPoint();
+                g.draw(new Murcielago(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                break;
         }
     }
 }
