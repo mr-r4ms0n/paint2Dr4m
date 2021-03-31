@@ -27,6 +27,7 @@ import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -59,7 +60,6 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     public static final int GENERAL = 8;
     public static final int AREA = 9;
 
-    
     //Figuras propias
     public static final int HEART = 10;
     public static final int HOUSE = 11;
@@ -73,14 +73,22 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     public static final int SANDCLOCK = 19;
     public static final int STAR6 = 20;
     public static final int SHARKASS = 21;
+    public static final int NO_SELECTED = 22;
     public int shapeType = RECTANGLE;
+
     // vector of input points
     Vector points = new Vector();
     int pointIndex = 0;
     Shape partialShape = null;
     Point p = null;
-    
+
     Point selectedPoint;
+    
+    
+    //Atributos para la configuracion
+    public static Color strokeColor = Color.BLACK;
+    public static Stroke stroke = new BasicStroke(1);
+    /////////////////////////////////
 
     //Coordenadas para dibujar el plano cartesiano
     int alto = 1370;
@@ -101,25 +109,38 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        g.setColor(Color.black);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
         for (int i = 0; i < shapes.size(); i++)
         {
             Shape s = shapes.get(i).getShape();
+            g2.setColor(shapes.get(i).getStrokeColor());
+            g2.setStroke(shapes.get(i).getStroke());
             g2.draw(s);
+
+            //System.out.println(shapes.get(i).getSelected());
             if (shapes.get(i).getSelected())
             {
-                float dash1[] = {10.0f};//la cantidad de largo de las lineas que se puntean
+                float dash1[] =
+                {
+                    10.0f
+                };//la cantidad de largo de las lineas que se puntean
                 BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
                 g2.setStroke(dashed);
-                Rectangle rec= shapes.get(i).getShape().getBounds();
+                Rectangle rec = shapes.get(i).getShape().getBounds();
+                rec.setBounds((int) rec.getX()-10, (int) rec.getY()-10, (int) rec.getWidth()+20, (int) rec.getHeight()+20);
                 g2.setPaint(new Color(0, 80, 157));
-                g2.draw(shapes.get(i).getShape()); // we can draw the shape instead of the bounding rectangle
                 g2.draw(rec);
-                g2.setPaint(Color.black);
                 g2.setStroke(new BasicStroke(1));
+               
+                shapes.get(i).setStrokeColor(strokeColor);
+                shapes.get(i).setStroke(stroke);
+                g2.setColor(shapes.get(i).getStrokeColor());
+                g2.setStroke(shapes.get(i).getStroke());
+                g2.draw(shapes.get(i).getShape());
             }
         }
+        
     }
 
     public void mouseClicked(MouseEvent ev)
@@ -140,16 +161,34 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
         pointIndex++;
         p = null;
         selectedPoint = ev.getPoint();
+
         if (Menu.selected)
         {
+            System.out.println("Presionado");
             for (int i = 0; i < shapes.size(); i++)
             {
                 if (shapes.get(i).getShape().contains(selectedPoint))
                 {
                     shapes.get(i).setSelected(true);
+                } else
+                {
+                    shapes.get(i).setSelected(false);
+                }
+            }
+        } else
+        {
+            if (Menu.selectedM)
+            {
+                for (int i = 0; i < shapes.size(); i++)
+                {
+                    if (shapes.get(i).getShape().contains(selectedPoint))
+                    {
+                        shapes.get(i).setSelected(true);
+                    }
                 }
             }
         }
+        repaint();
     }
 
     public void mouseReleased(MouseEvent ev)
@@ -158,7 +197,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
         Point p1 = (Point) (points.get(pointIndex - 1));
         p = ev.getPoint();
         Shape s = null;
-        
+
         switch (shapeType)
         {
             case RECTANGLE:
@@ -226,7 +265,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 s = new Estrella4Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
                 break;
             case RIGHTARROW:
-                s =  new FlechaDer(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                s = new FlechaDer(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
                 break;
             case LIGHTNING:
                 s = new Rayo(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
@@ -240,17 +279,23 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
             case BAT:
                 s = new Murcielago(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
                 break;
-            
+            case NO_SELECTED:
+                System.out.println("No se dibuja nada");
+                break;
+
         }
         if (s != null)
         {
-            MyShape s1 = new MyShape(s,null);
+            MyShape s1 = new MyShape(s);
             shapes.add(s1);
+            System.out.println("Figura guardada" + "Tamaño del array:" + shapes.size());
             points.clear();
             pointIndex = 0;
             p = null;
-            repaint();
+            //repaint();
         }
+        repaint();
+
     }
 
     public void mouseMoved(MouseEvent ev)
@@ -260,7 +305,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     public void mouseDragged(MouseEvent ev)
     {
         Graphics2D g = (Graphics2D) getGraphics();
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        //g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setXORMode(Color.white);
         Point p1 = (Point) points.get(pointIndex - 1);
         switch (shapeType)
@@ -434,14 +479,14 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 g.draw(new Rayo(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
                 break;
             case SANDCLOCK:
-                 if (p != null)
+                if (p != null)
                 {
                     g.draw(new RelojArena(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
                 }
                 p = ev.getPoint();
                 g.draw(new RelojArena(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
                 break;
-            
+
             case STAR6:
                 if (p != null)
                 {

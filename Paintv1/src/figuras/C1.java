@@ -77,7 +77,10 @@ public class C1 implements Shape
     @Override
     public Rectangle getBounds()
     {
-        return path.getBounds();
+        Rectangle rec = null;
+        rec = path.getBounds();
+        rec.setBounds((int) rec.getX()+20, (int) rec.getY()+40, (int) rec.getWidth()-40, (int) rec.getHeight()-15);
+        return rec;
     }
     
     @Override

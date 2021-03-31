@@ -6,6 +6,7 @@
 package canvas;
 
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Shape;
 import java.awt.Stroke;
@@ -19,18 +20,18 @@ public class MyShape
     private Shape shape = null;
     private Object strokeTexture = null;
     private Object fillTexture = null;
-    private Color color = new Color(0, 0, 0);
-    private Stroke stroke = null;
+    private Color strokeColor = new Color(0, 0, 0);
+    private Stroke stroke;
     private AlphaComposite alphaComposite = null;
     private Boolean fillOk;
     private Boolean outlineOk;
     private Boolean strokeOk;
     private Boolean selected = false;
     
-    public MyShape(Shape shape, Color color)
+    public MyShape(Shape shape)
     {
         this.shape = shape;
-        this.color = color;
+        this.stroke = new BasicStroke(1);
     }
     
 
@@ -64,14 +65,14 @@ public class MyShape
         this.fillTexture = fillTexture;
     }
 
-    public Color getColor()
+    public Color getStrokeColor()
     {
-        return color;
+        return strokeColor;
     }
 
-    public void setColor(Color color)
+    public void setStrokeColor(Color color)
     {
-        this.color = color;
+        this.strokeColor = color;
     }
 
     public Stroke getStroke()
