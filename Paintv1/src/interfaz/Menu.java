@@ -33,6 +33,7 @@ public class Menu extends javax.swing.JFrame
     {
         initComponents();
         jBSelectStrokeAtributo2.setVisible(false);
+        System.out.println(getBounds());
     }
 
     public void noSelection()
