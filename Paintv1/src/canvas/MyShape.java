@@ -8,8 +8,10 @@ package canvas;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.TexturePaint;
 
 /**
  *
@@ -52,7 +54,19 @@ public class MyShape
 
     public void setStrokeTexture(Object strokeTexture)
     {
-        this.strokeTexture = strokeTexture;
+        if (strokeTexture instanceof TexturePaint )
+        {
+            this.strokeTexture = (TexturePaint) strokeTexture;
+        } else
+        {
+            if (strokeTexture instanceof GradientPaint)
+            {
+                this.strokeTexture = (GradientPaint) strokeTexture;
+            } else
+            {
+                //Color
+            }
+        }
     }
 
     public Object getFillTexture()

@@ -5,7 +5,11 @@
  */
 package interfaz;
 
+import canvas.JavaDraw2DPanelM;
 import java.awt.Image;
+import java.awt.Label;
+import java.awt.TexturePaint;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  *
@@ -38,31 +43,37 @@ public class NewJDialog extends javax.swing.JDialog
         ImageIcon i1;
         ImageIcon i2;
         ImageIcon i3;
+        JLabel i4 = new JLabel();
+        i4.setBounds(5, 37, 151, 93);
+        i4.setOpaque(true);
         switch (tipo)
         {
             case "boton":
                 i1 = new ImageIcon(getClass().getResource("/images/button.png"));
                 i2 = new ImageIcon(i1.getImage().getScaledInstance(jLImage.getWidth(), jLImage.getHeight(), Image.SCALE_DEFAULT));
-                i3 = new ImageIcon(i1.getImage().getScaledInstance(Menu.jlContorno.getWidth(), Menu.jlContorno.getHeight(), Image.SCALE_DEFAULT));
+                i3 = new ImageIcon(i1.getImage().getScaledInstance(i4.getWidth(), i4.getHeight(), Image.SCALE_DEFAULT));
                 jLImage.setIcon(i2);
-                Menu.jlContorno.setIcon(i3);
+                i4.setIcon(i3);
+                i4.setText("EEEEE");
+                Menu.JPContorno.add(i4);
                 filename = "/images/button.png";
-                //jLImage.setText("TRRRRRRRR");
                 break;
             case "flamas":
                 i1 = new ImageIcon(getClass().getResource("/images/flames.png"));
                 i2 = new ImageIcon(i1.getImage().getScaledInstance(jLImage.getWidth(), jLImage.getHeight(), Image.SCALE_DEFAULT));
-                i3 = new ImageIcon(i1.getImage().getScaledInstance(Menu.jlContorno.getWidth(), Menu.jlContorno.getHeight(), Image.SCALE_DEFAULT));
+                i3 = new ImageIcon(i1.getImage().getScaledInstance(i4.getWidth(), i4.getHeight(), Image.SCALE_DEFAULT));
                 jLImage.setIcon(i2);
-                Menu.jlContorno.setIcon(i3);
+                i4.setIcon(i3);
+                Menu.JPContorno.add(i4);
                 filename = "/images/flames.png";
                 break;
             case "l_verde":
                 i1 = new ImageIcon(getClass().getResource("/images/greeen.png"));
                 i2 = new ImageIcon(i1.getImage().getScaledInstance(jLImage.getWidth(), jLImage.getHeight(), Image.SCALE_DEFAULT));
-                i3 = new ImageIcon(i1.getImage().getScaledInstance(Menu.jlContorno.getWidth(), Menu.jlContorno.getHeight(), Image.SCALE_DEFAULT));
+                i3 = new ImageIcon(i1.getImage().getScaledInstance(i4.getWidth(), i4.getHeight(), Image.SCALE_DEFAULT));
                 jLImage.setIcon(i2);
-                Menu.jlContorno.setIcon(i3);
+                i4.setIcon(i3);
+                Menu.JPContorno.add(i4);
                 filename = "/images/greeen.png";
                 break;
         }
@@ -223,7 +234,8 @@ public class NewJDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_jButton1ActionPerformed
         BufferedImage in = getImage(filename);
         BufferedImage buffImg = new BufferedImage(in.getWidth(), in.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        Menu.bi = buffImg;
+        TexturePaint tp = new TexturePaint(buffImg, new Rectangle2D.Double(10, 10, 50, 25));
+        JavaDraw2DPanelM.strokeTexture = tp;
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

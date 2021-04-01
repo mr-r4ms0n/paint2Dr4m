@@ -22,12 +22,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.TexturePaint;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -83,11 +85,11 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     Point p = null;
 
     Point selectedPoint;
-    
-    
+
     //Atributos para la configuracion
     public static Color strokeColor = Color.BLACK;
     public static Stroke stroke = new BasicStroke(1);
+    public static Object strokeTexture = null;
     /////////////////////////////////
 
     //Coordenadas para dibujar el plano cartesiano
@@ -128,19 +130,25 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
                 g2.setStroke(dashed);
                 Rectangle rec = shapes.get(i).getShape().getBounds();
-                rec.setBounds((int) rec.getX()-10, (int) rec.getY()-10, (int) rec.getWidth()+20, (int) rec.getHeight()+20);
+                rec.setBounds((int) rec.getX() - 10, (int) rec.getY() - 10, (int) rec.getWidth() + 20, (int) rec.getHeight() + 20);
                 g2.setPaint(new Color(0, 80, 157));
                 g2.draw(rec);
-                g2.setStroke(new BasicStroke(1));
-               
+                //g2.setStroke(new BasicStroke(1));
                 shapes.get(i).setStrokeColor(strokeColor);
                 shapes.get(i).setStroke(stroke);
-                g2.setColor(shapes.get(i).getStrokeColor());
+                shapes.get(i).setStrokeTexture(strokeTexture);
+
+                if ((shapes.get(i).getStrokeTexture() == null))
+                {
+                    g2.setColor(shapes.get(i).getStrokeColor());
+                }
+                g2.setPaint((Paint) shapes.get(i).getStrokeTexture());
                 g2.setStroke(shapes.get(i).getStroke());
                 g2.draw(shapes.get(i).getShape());
+                g2.fill(shapes.get(i).getShape());
             }
         }
-        
+
     }
 
     public void mouseClicked(MouseEvent ev)
@@ -188,7 +196,6 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 }
             }
         }
-        repaint();
     }
 
     public void mouseReleased(MouseEvent ev)
