@@ -183,6 +183,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                     shapes.get(i).setSelected(false);
                 }
             }
+            
         } else
         {
             if (Menu.selectedM)
@@ -196,6 +197,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 }
             }
         }
+        
     }
 
     public void mouseReleased(MouseEvent ev)
@@ -299,9 +301,9 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
             points.clear();
             pointIndex = 0;
             p = null;
-            //repaint();
+            repaint();
         }
-        repaint();
+        
 
     }
 

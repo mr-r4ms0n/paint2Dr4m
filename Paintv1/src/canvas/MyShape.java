@@ -25,9 +25,6 @@ public class MyShape
     private Color strokeColor = new Color(0, 0, 0);
     private Stroke stroke;
     private AlphaComposite alphaComposite = null;
-    private Boolean fillOk;
-    private Boolean outlineOk;
-    private Boolean strokeOk;
     private Boolean selected = false;
     
     public MyShape(Shape shape)
@@ -107,36 +104,6 @@ public class MyShape
     public void setAlphaComposite(AlphaComposite alphaComposite)
     {
         this.alphaComposite = alphaComposite;
-    }
-
-    public Boolean getFillOk()
-    {
-        return fillOk;
-    }
-
-    public void setFillOk(Boolean fillOk)
-    {
-        this.fillOk = fillOk;
-    }
-
-    public Boolean getOutlineOk()
-    {
-        return outlineOk;
-    }
-
-    public void setOutlineOk(Boolean outlineOk)
-    {
-        this.outlineOk = outlineOk;
-    }
-
-    public Boolean getStrokeOk()
-    {
-        return strokeOk;
-    }
-
-    public void setStrokeOk(Boolean strokeOk)
-    {
-        this.strokeOk = strokeOk;
     }
 
     public Boolean getSelected()
