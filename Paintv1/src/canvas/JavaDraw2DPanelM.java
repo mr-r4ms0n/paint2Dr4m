@@ -76,6 +76,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     public static final int STAR6 = 20;
     public static final int SHARKASS = 21;
     public static final int NO_SELECTED = 22;
+    public static final int ARBOL = 23;
     public int shapeType = RECTANGLE;
 
     // vector of input points
