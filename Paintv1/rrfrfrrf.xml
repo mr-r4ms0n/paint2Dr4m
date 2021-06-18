@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_111" class="java.beans.XMLDecoder">
+ <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="guardado.PropsFig">
+    <void property="pathSegments">
+     <object class="java.util.ArrayList">
+      <void method="add">
+       <object class="guardado.PathSegment">
+        <void property="coords">
+         <array class="double" length="6">
+          <void index="0">
+           <double>253.0</double>
+          </void>
+          <void index="1">
+           <double>150.0</double>
+          </void>
+         </array>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="guardado.PathSegment">
+        <void property="coords">
+         <array class="double" length="6">
+          <void index="0">
+           <double>143.0</double>
+          </void>
+          <void index="1">
+           <double>297.0</double>
+          </void>
+         </array>
+        </void>
+        <void property="pathSegmentType">
+         <int>1</int>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="guardado.PathSegment">
+        <void property="coords">
+         <array class="double" length="6">
+          <void index="0">
+           <double>363.0</double>
+          </void>
+          <void index="1">
+           <double>297.0</double>
+          </void>
+         </array>
+        </void>
+        <void property="pathSegmentType">
+         <int>1</int>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="guardado.PathSegment">
+        <void property="coords">
+         <array class="double" length="6"/>
+        </void>
+        <void property="pathSegmentType">
+         <int>4</int>
+        </void>
+       </object>
+      </void>
+     </object>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="guardado.PropsFig">
+    <void property="pathSegments">
+     <object class="java.util.ArrayList">
+      <void method="add">
+       <object class="guardado.PathSegment">
+        <void property="coords">
+         <array class="double" length="6">
+          <void index="0">
+           <double>453.0</double>
+          </void>
+          <void index="1">
+           <double>176.0</double>
+          </void>
+         </array>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="guardado.PathSegment">
+        <void property="coords">
+         <array class="double" length="6">
+          <void index="0">
+           <double>421.0</double>
+          </void>
+          <void index="1">
+           <double>235.0</double>
+          </void>
+         </array>
+        </void>
+        <void property="pathSegmentType">
+         <int>1</int>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="guardado.PathSegment">
+        <void property="coords">
+         <array class="double" length="6">
+          <void index="0">
+           <double>358.0</double>
+          </void>
+          <void index="1">
+           <double>265.0</double>
+          </void>
+         </array>
+        </void>
+        <void property="pathSegmentType">
+         <int>1</int>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="guardado.PathSegment">
+        <void property="coords">
+         <array class="double" length="6">
+          <void index="0">
+           <double>421.0</double>
+          </void>
+          <void index="1">
+           <double>295.0</double>
+          </void>
+         </array>
+        </void>
+        <void property="pathSegmentType">
+         <int>1</int>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="guardado.PathSegment">
+        <void property="coords">
+         <array class="double" length="6">
+          <void index="0">
+           <double>453.0</double>
+          </void>
+          <void index="1">
+           <double>354.0</double>
+          </void>
+         </array>
+        </void>
+        <void property="pathSegmentType">
+         <int>1</int>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="guardado.PathSegment">
+        <void property="coords">
+         <array class="double" length="6">
+          <void index="0">
+           <double>485.0</double>
+          </void>
+          <void index="1">
+           <double>295.0</double>
+          </void>
+         </array>
+        </void>
+        <void property="pathSegmentType">
+         <int>1</int>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="guardado.PathSegment">
+        <void property="coords">
+         <array class="double" length="6">
+          <void index="0">
+           <double>549.0</double>
+          </void>
+          <void index="1">
+           <double>265.0</double>
+          </void>
+         </array>
+        </void>
+        <void property="pathSegmentType">
+         <int>1</int>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="guardado.PathSegment">
+        <void property="coords">
+         <array class="double" length="6">
+          <void index="0">
+           <double>485.0</double>
+          </void>
+          <void index="1">
+           <double>235.0</double>
+          </void>
+         </array>
+        </void>
+        <void property="pathSegmentType">
+         <int>1</int>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="guardado.PathSegment">
+        <void property="coords">
+         <array class="double" length="6"/>
+        </void>
+        <void property="pathSegmentType">
+         <int>4</int>
+        </void>
+       </object>
+      </void>
+     </object>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

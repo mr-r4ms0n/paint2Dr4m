@@ -5,7 +5,6 @@
  */
 package canvas;
 
-import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -33,7 +32,6 @@ public class MyShape
         this.stroke = new BasicStroke(2);
     }
     
-
     public Shape getShape()
     {
         return shape;

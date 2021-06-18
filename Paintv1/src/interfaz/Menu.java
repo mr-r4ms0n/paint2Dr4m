@@ -6,14 +6,22 @@
 package interfaz;
 
 import canvas.MyShape;
+import guardado.SalvarCargarProyecto;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
+import java.awt.HeadlessException;
 import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -28,8 +36,8 @@ public class Menu extends javax.swing.JFrame
     public static boolean selectedT = false;
     //Variables que ayudan a colocarle atributos a una figura
     public static boolean setStrokeColor = false;
-    public static Color strokeColor1 = null;
-    public static Color strokeColor2 = null;
+    public static Color strokeColor1 = Color.BLACK;
+    public static Color strokeColor2 = Color.BLACK;
     public static BufferedImage bi;
 
     //Variables que ayudan a saber el tipo de color y contorno que se busca para una figura
@@ -118,8 +126,8 @@ public class Menu extends javax.swing.JFrame
         jRCSolido.setEnabled(atr);
         jRCGradiente.setEnabled(atr);
         jRRellenoImagen.setEnabled(atr);
-        //Transparencia y angulo
-        jSTransparencia.setEnabled(atr);
+        //Transformaciones
+        jCTransformaciones.setEnabled(atr);
     }
 
     /**
@@ -156,9 +164,11 @@ public class Menu extends javax.swing.JFrame
         jRRellenoImagen = new javax.swing.JRadioButton();
         jPanel12 = new javax.swing.JPanel();
         jPEAtributos = new javax.swing.JPanel();
-        jSTransparencia = new javax.swing.JSlider();
-        JPRotar = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        JPRotar = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton21 = new javax.swing.JButton();
         vPnlModosEd = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jBCBasica = new javax.swing.JButton();
@@ -197,7 +207,7 @@ public class Menu extends javax.swing.JFrame
         jButton26 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         vPnlDatos = new javax.swing.JPanel();
-        javaDraw2DPanelM2 = new canvas.JavaDraw2DPanelM();
+        panelPaint = new canvas.JavaDraw2DPanelM();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -341,7 +351,7 @@ public class Menu extends javax.swing.JFrame
                         .addComponent(jBSelectStrokeAtributo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBSelectStrokeAtributo2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 2, Short.MAX_VALUE))
+                        .addGap(0, 7, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPEContornoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBSelectStrokeRnd, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -446,34 +456,59 @@ public class Menu extends javax.swing.JFrame
         jPEAtributos.setBackground(new java.awt.Color(204, 204, 255));
         jPEAtributos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transparencia", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
+        jLabel8.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
+        jLabel8.setText("Transformar:");
+
+        jCTransformaciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ninguna", "Mover", "Rotar", "Escalar", "Recortar" }));
+        jCTransformaciones.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jCTransformacionesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPEAtributosLayout = new javax.swing.GroupLayout(jPEAtributos);
         jPEAtributos.setLayout(jPEAtributosLayout);
         jPEAtributosLayout.setHorizontalGroup(
             jPEAtributosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPEAtributosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSTransparencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPEAtributosLayout.createSequentialGroup()
+                .addContainerGap(106, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCTransformaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60))
         );
         jPEAtributosLayout.setVerticalGroup(
             jPEAtributosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPEAtributosLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jSTransparencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPEAtributosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCTransformaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         JPRotar.setBackground(new java.awt.Color(204, 204, 255));
-        JPRotar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rotar", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        JPRotar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Opciones de guardado", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 1, 13))); // NOI18N
 
-        jLabel8.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        jLabel8.setText("Transformar:");
-
-        vCBox_AFFINE_TRANFORMATIONS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ninguna", "Mover", "Rotar", "Escalar", "Magia", "Reflejar" }));
-        vCBox_AFFINE_TRANFORMATIONS.addActionListener(new java.awt.event.ActionListener()
+        jButton1.setText("Guardar proyecto");
+        jButton1.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                vCBox_AFFINE_TRANFORMATIONSActionPerformed(evt);
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Guardar figura");
+
+        jButton21.setText("Cargar Proyecto");
+        jButton21.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton21ActionPerformed(evt);
             }
         });
 
@@ -482,19 +517,26 @@ public class Menu extends javax.swing.JFrame
         JPRotarLayout.setHorizontalGroup(
             JPRotarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPRotarLayout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(vCBox_AFFINE_TRANFORMATIONS, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(JPRotarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(JPRotarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1)
+                        .addGap(26, 26, 26)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(JPRotarLayout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addComponent(jButton21)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         JPRotarLayout.setVerticalGroup(
             JPRotarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPRotarLayout.createSequentialGroup()
-                .addGroup(JPRotarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(vCBox_AFFINE_TRANFORMATIONS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(JPRotarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(jButton21))
         );
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -981,7 +1023,7 @@ public class Menu extends javax.swing.JFrame
         vPnlDatos.setLayout(vPnlDatosLayout);
         vPnlDatosLayout.setHorizontalGroup(
             vPnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1181, Short.MAX_VALUE)
+            .addGap(0, 1614, Short.MAX_VALUE)
         );
         vPnlDatosLayout.setVerticalGroup(
             vPnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -990,20 +1032,20 @@ public class Menu extends javax.swing.JFrame
 
         jPanel2.add(vPnlDatos, java.awt.BorderLayout.PAGE_END);
 
-        javaDraw2DPanelM2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        panelPaint.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
 
-        javax.swing.GroupLayout javaDraw2DPanelM2Layout = new javax.swing.GroupLayout(javaDraw2DPanelM2);
-        javaDraw2DPanelM2.setLayout(javaDraw2DPanelM2Layout);
-        javaDraw2DPanelM2Layout.setHorizontalGroup(
-            javaDraw2DPanelM2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 495, Short.MAX_VALUE)
+        javax.swing.GroupLayout panelPaintLayout = new javax.swing.GroupLayout(panelPaint);
+        panelPaint.setLayout(panelPaintLayout);
+        panelPaintLayout.setHorizontalGroup(
+            panelPaintLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 915, Short.MAX_VALUE)
         );
-        javaDraw2DPanelM2Layout.setVerticalGroup(
-            javaDraw2DPanelM2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelPaintLayout.setVerticalGroup(
+            panelPaintLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 566, Short.MAX_VALUE)
         );
 
-        jPanel2.add(javaDraw2DPanelM2, java.awt.BorderLayout.CENTER);
+        jPanel2.add(panelPaint, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -1015,126 +1057,126 @@ public class Menu extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButton15ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.RECTANGLE;
+        panelPaint.shapeType = panelPaint.RECTANGLE;
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton3ActionPerformed
     {//GEN-HEADEREND:event_jButton3ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.LINE2D;
+        panelPaint.shapeType = panelPaint.LINE2D;
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton14ActionPerformed
     {//GEN-HEADEREND:event_jButton14ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.ELLIPSE2D;
+        panelPaint.shapeType = panelPaint.ELLIPSE2D;
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton16ActionPerformed
     {//GEN-HEADEREND:event_jButton16ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.ROUNDRECTANGLE2D;
+        panelPaint.shapeType = panelPaint.ROUNDRECTANGLE2D;
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton17ActionPerformed
     {//GEN-HEADEREND:event_jButton17ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.ARC2D;
+        panelPaint.shapeType = panelPaint.ARC2D;
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton18ActionPerformed
     {//GEN-HEADEREND:event_jButton18ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.QUADCURVE2D;
+        panelPaint.shapeType = panelPaint.QUADCURVE2D;
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton19ActionPerformed
     {//GEN-HEADEREND:event_jButton19ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.CUBICCURVE2D;
+        panelPaint.shapeType = panelPaint.CUBICCURVE2D;
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton20ActionPerformed
     {//GEN-HEADEREND:event_jButton20ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.POLYGON;
+        panelPaint.shapeType = panelPaint.POLYGON;
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton4ActionPerformed
     {//GEN-HEADEREND:event_jButton4ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.HEART;
+        panelPaint.shapeType = panelPaint.HEART;
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton5ActionPerformed
     {//GEN-HEADEREND:event_jButton5ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.HOUSE;
+        panelPaint.shapeType = panelPaint.HOUSE;
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton6ActionPerformed
     {//GEN-HEADEREND:event_jButton6ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.TRIANGLE;
+        panelPaint.shapeType = panelPaint.TRIANGLE;
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton7ActionPerformed
     {//GEN-HEADEREND:event_jButton7ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.DIAMOND;
+        panelPaint.shapeType = panelPaint.DIAMOND;
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton8ActionPerformed
     {//GEN-HEADEREND:event_jButton8ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.STAR5;
+        panelPaint.shapeType = panelPaint.STAR5;
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton9ActionPerformed
     {//GEN-HEADEREND:event_jButton9ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.STAR4;
+        panelPaint.shapeType = panelPaint.STAR4;
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton11ActionPerformed
     {//GEN-HEADEREND:event_jButton11ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.LIGHTNING;
+        panelPaint.shapeType = panelPaint.LIGHTNING;
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton13ActionPerformed
     {//GEN-HEADEREND:event_jButton13ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.STAR6;
+        panelPaint.shapeType = panelPaint.STAR6;
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton10ActionPerformed
     {//GEN-HEADEREND:event_jButton10ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.RIGHTARROW;
+        panelPaint.shapeType = panelPaint.RIGHTARROW;
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton12ActionPerformed
     {//GEN-HEADEREND:event_jButton12ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.SANDCLOCK;
+        panelPaint.shapeType = panelPaint.SANDCLOCK;
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jToggleButton6ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jToggleButton6ActionPerformed
@@ -1143,15 +1185,15 @@ public class Menu extends javax.swing.JFrame
         {
             selected = true;
             selectedM = false;
-            javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.NO_SELECTED;
+            panelPaint.shapeType = panelPaint.NO_SELECTED;
             jToggleButton8.setEnabled(false);
             jToggleButton11.setEnabled(false);
         } else
         {
             selected = false;
             selectedM = false;
-            javaDraw2DPanelM2.setSelectedRentagle();
-            javaDraw2DPanelM2.repaint();
+            panelPaint.setSelectedRentagle();
+            panelPaint.repaint();
             jToggleButton8.setEnabled(true);
             jToggleButton11.setEnabled(true);
         }
@@ -1161,7 +1203,7 @@ public class Menu extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButton26ActionPerformed
         selected = false;
         selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.BAT;
+        panelPaint.shapeType = panelPaint.BAT;
     }//GEN-LAST:event_jButton26ActionPerformed
 
     private void jBSelectStrokeAtributoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBSelectStrokeAtributoActionPerformed
@@ -1173,15 +1215,15 @@ public class Menu extends javax.swing.JFrame
             //Mandamos el color seleccionado al canvas (JavaDraw2DPanel)
             if (tipo_ContornoT == 1)
             {
-                javaDraw2DPanelM2.strokeColor = strokeColor1;
+                panelPaint.strokeColor = strokeColor1;
                 JPContorno.setC1(strokeColor1);
                 JPContorno.repaint();
-                javaDraw2DPanelM2.strokeTexture = null;
+                panelPaint.strokeTexture = null;
             } else
             {
                 if (tipo_ContornoT == 2)
                 {
-                    javaDraw2DPanelM2.strokeTexture = new GradientPaint(0.0f, 0.0f, strokeColor1, 0.0f, 10.0f, strokeColor2, true);
+                    panelPaint.strokeTexture = new GradientPaint(0.0f, 0.0f, strokeColor1, 0.0f, 10.0f, strokeColor2, true);
                     JPContorno.setC1(strokeColor1);
                     JPContorno.repaint();
                 }
@@ -1202,7 +1244,7 @@ public class Menu extends javax.swing.JFrame
         int b = rand.nextInt(255);
         strokeColor1 = new Color(r, g, b);
         JPContorno.setBackground(strokeColor1);
-        javaDraw2DPanelM2.strokeColor = strokeColor1;
+        panelPaint.strokeColor = strokeColor1;
     }//GEN-LAST:event_jBSelectStrokeRndActionPerformed
 
     private void jRadioBImagenStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_jRadioBImagenStateChanged
@@ -1226,7 +1268,7 @@ public class Menu extends javax.swing.JFrame
         if (jCTipoBorde.getSelectedIndex() == 0)
         {
             BasicStroke bs = new BasicStroke(Integer.parseInt(jSGrosorBorde.getValue().toString()));
-            javaDraw2DPanelM2.stroke = bs;
+            panelPaint.stroke = bs;
         } else
         {
             if (jCTipoBorde.getSelectedIndex() == 1)
@@ -1241,7 +1283,7 @@ public class Menu extends javax.swing.JFrame
                         3.0f,
                         punteo1,
                         10.0f);
-                javaDraw2DPanelM2.stroke = bs;
+                panelPaint.stroke = bs;
             }
 
         }
@@ -1252,7 +1294,7 @@ public class Menu extends javax.swing.JFrame
         if (jCTipoBorde.getSelectedIndex() == 0)
         {
             BasicStroke bs = new BasicStroke(Integer.parseInt(jSGrosorBorde.getValue().toString()));
-            javaDraw2DPanelM2.stroke = bs;
+            panelPaint.stroke = bs;
         } else
         {
             if (jCTipoBorde.getSelectedIndex() == 1)
@@ -1267,7 +1309,7 @@ public class Menu extends javax.swing.JFrame
                         3.0f,
                         punteo1,
                         10.0f);
-                javaDraw2DPanelM2.stroke = bs;
+                panelPaint.stroke = bs;
             }
         }
     }//GEN-LAST:event_jSGrosorBordeStateChanged
@@ -1281,8 +1323,8 @@ public class Menu extends javax.swing.JFrame
             JPContorno.setC1(strokeColor1);
             JPContorno.setC2(strokeColor2);
             //Mandamos el color seleccionado al canvas (JavaDraw2DPanel)
-            javaDraw2DPanelM2.strokeColor = strokeColor2;
-            javaDraw2DPanelM2.strokeTexture = new GradientPaint(0.0f, 0.0f, strokeColor1, 0.0f, 10.0f, strokeColor2, true);
+            panelPaint.strokeColor = strokeColor2;
+            panelPaint.strokeTexture = new GradientPaint(0.0f, 0.0f, strokeColor1, 0.0f, 10.0f, strokeColor2, true);
             JPContorno.repaint();
         }
     }//GEN-LAST:event_jBSelectStrokeAtributo2ActionPerformed
@@ -1325,13 +1367,13 @@ public class Menu extends javax.swing.JFrame
         {
             selectedM = false;
             selected = false;
-            javaDraw2DPanelM2.setSelectedRentagle();
-            javaDraw2DPanelM2.repaint();
+            panelPaint.setSelectedRentagle();
+            panelPaint.repaint();
             jToggleButton6.setEnabled(true);
             jToggleButton11.setEnabled(true);
         }
 
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.NO_SELECTED;
+        panelPaint.shapeType = panelPaint.NO_SELECTED;
     }//GEN-LAST:event_jToggleButton8ActionPerformed
 
     private void jToggleButton11ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jToggleButton11ActionPerformed
@@ -1343,19 +1385,19 @@ public class Menu extends javax.swing.JFrame
             selectedM = false;
             jToggleButton6.setEnabled(false);
             jToggleButton8.setEnabled(false);
-            javaDraw2DPanelM2.mousePressed(null);
+            panelPaint.mousePressed(null);
         } else
         {
             selectedT = false;
             selected = false;
             selectedM = false;
-            javaDraw2DPanelM2.setSelectedRentagle();
-            javaDraw2DPanelM2.repaint();
+            panelPaint.setSelectedRentagle();
+            panelPaint.repaint();
             jToggleButton6.setEnabled(true);
             jToggleButton8.setEnabled(true);
         }
 
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.NO_SELECTED;
+        panelPaint.shapeType = panelPaint.NO_SELECTED;
     }//GEN-LAST:event_jToggleButton11ActionPerformed
 
     private void jBCBasicaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBCBasicaActionPerformed
@@ -1374,7 +1416,7 @@ public class Menu extends javax.swing.JFrame
             jBEdicion.setEnabled(true);
             //System.out.println("entre al true");
             bloqueaFigs(false);
-            javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.NO_SELECTED;
+            panelPaint.shapeType = panelPaint.NO_SELECTED;
         }
     }//GEN-LAST:event_jBCBasicaActionPerformed
 
@@ -1436,10 +1478,49 @@ public class Menu extends javax.swing.JFrame
         operaciones(4);
     }//GEN-LAST:event_jToggleButton15ActionPerformed
 
-    private void vCBox_AFFINE_TRANFORMATIONSActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_vCBox_AFFINE_TRANFORMATIONSActionPerformed
-    {//GEN-HEADEREND:event_vCBox_AFFINE_TRANFORMATIONSActionPerformed
+    private void jCTransformacionesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCTransformacionesActionPerformed
+    {//GEN-HEADEREND:event_jCTransformacionesActionPerformed
         //Este cBOx es llamado desde Java2DPanel
-    }//GEN-LAST:event_vCBox_AFFINE_TRANFORMATIONSActionPerformed
+    }//GEN-LAST:event_jCTransformacionesActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
+    {//GEN-HEADEREND:event_jButton1ActionPerformed
+        try
+        {
+            SalvarCargarProyecto.serializeShapes(panelPaint.getShapes());
+            JOptionPane.showMessageDialog(this, "Proyecto guardado con éxito");
+        } catch (IOException ex)
+        {
+            System.out.println("Error al guardar proyecto: " + ex.toString());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton21ActionPerformed
+    {//GEN-HEADEREND:event_jButton21ActionPerformed
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo de Canvas", "xml");
+        JFileChooser selectorArchivos = new JFileChooser();
+        selectorArchivos.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        selectorArchivos.setFileFilter(filtro);
+
+        try
+        {
+            // indica cual fue la accion de usuario sobre el jfilechooser
+            int resultado = resultado = selectorArchivos.showOpenDialog(null);
+            if (resultado == JFileChooser.APPROVE_OPTION)
+            {
+                File archivo = selectorArchivos.getSelectedFile(); // obtiene el archivo seleccionado
+
+                ArrayList<MyShape> arr = SalvarCargarProyecto.deserializeShapes(archivo);
+                panelPaint.setShapes(arr);
+                System.out.println(arr.size());
+                panelPaint.repaint();
+            }
+        } catch (HeadlessException | IOException e)
+        {
+            System.out.println("Error al cargar proyecto: " + e);
+        }
+
+    }//GEN-LAST:event_jButton21ActionPerformed
 
     public void operaciones(int opType)
     {
@@ -1449,23 +1530,23 @@ public class Menu extends javax.swing.JFrame
         MyShape figAux = null; //Figura auxiliar que se usara para recuperar las propiedades de la figura antigua
 
         //Primero recorremos todo el arreglo buscando la primer figura que existe en nuestro arreglo
-        for (int i = 0; i < javaDraw2DPanelM2.shapes.size(); i++)
+        for (int i = 0; i < panelPaint.getShapes().size(); i++)
         {
             //Primero agarramos la primer figura del arreglo, de tal manera que si esta seleccionada y la figura madre es false entonces 
             //entramos y seleccionamos la misma.
-            if (javaDraw2DPanelM2.shapes.get(i).getSelected() && !figMadre)
+            if (panelPaint.getShapes().get(i).getSelected() && !figMadre)
             {
-                s = new Area(javaDraw2DPanelM2.shapes.get(i).getShape()); //Guardamos la figura como Area en S
+                s = new Area(panelPaint.getShapes().get(i).getShape()); //Guardamos la figura como Area en S
                 figMadre = true; //Hacemos true para que ya se tenga una figura madre de base
-                figAux = javaDraw2DPanelM2.shapes.get(i);//Obtenemos los parametros de la figura madre (Color, relleno etc)
-                javaDraw2DPanelM2.shapes.remove(i); //Eliminamos la figura madre del arreglo de shapes
+                figAux = panelPaint.getShapes().get(i);//Obtenemos los parametros de la figura madre (Color, relleno etc)
+                panelPaint.getShapes().remove(i); //Eliminamos la figura madre del arreglo de shapes
                 i--; //Le quitamos 1 para que no encuentre a la misma figura
 
                 //Posteriormente si ya tenmos una figura madre recorremos las demas figuras
-            } else if (javaDraw2DPanelM2.shapes.get(i).getSelected() && figMadre)
+            } else if (panelPaint.getShapes().get(i).getSelected() && figMadre)
             {
                 //Creamos un area con la figura que este seleccionada
-                Area aAux = new Area(javaDraw2DPanelM2.shapes.get(i).getShape());
+                Area aAux = new Area(panelPaint.getShapes().get(i).getShape());
                 //Dependiendo el caso que se proporcione hacemos la operacion boolena que corresponde
                 switch (opType)
                 {
@@ -1483,7 +1564,7 @@ public class Menu extends javax.swing.JFrame
                         break;
                 }
                 //Removemos la figura que se tiene en el arreglo y se incluyo dentro del area
-                javaDraw2DPanelM2.shapes.remove(i);
+                panelPaint.getShapes().remove(i);
                 //Cuando ya tenemos una Area hecha con minimo 2 figuras decimos que ya hay una figura con operaciones booleanas por lo que se procede a agregar
                 figOperada = true;
                 i--;
@@ -1493,7 +1574,7 @@ public class Menu extends javax.swing.JFrame
         if (figOperada)
         {
             Shape newShape = s;
-            javaDraw2DPanelM2.shapes.add(new MyShape(newShape));
+            panelPaint.getShapes().add(new MyShape(newShape));
         }
     }
 
@@ -1554,6 +1635,7 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JButton jBSelectStrokeAtributo;
     private javax.swing.JButton jBSelectStrokeAtributo2;
     private javax.swing.JButton jBSelectStrokeRnd;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
@@ -1564,7 +1646,9 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
+    private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1574,6 +1658,7 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jCTipoBorde;
+    public static final javax.swing.JComboBox<String> jCTransformaciones = new javax.swing.JComboBox<>();
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPEAtributos;
@@ -1596,7 +1681,6 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JRadioButton jRadioBImagen;
     private javax.swing.JRadioButton jRadioGradiente;
     private javax.swing.JSpinner jSGrosorBorde;
-    private javax.swing.JSlider jSTransparencia;
     private javax.swing.JToggleButton jToggleButton11;
     private javax.swing.JToggleButton jToggleButton12;
     private javax.swing.JToggleButton jToggleButton13;
@@ -1604,8 +1688,7 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JToggleButton jToggleButton15;
     private javax.swing.JToggleButton jToggleButton6;
     private javax.swing.JToggleButton jToggleButton8;
-    private canvas.JavaDraw2DPanelM javaDraw2DPanelM2;
-    public static final javax.swing.JComboBox<String> vCBox_AFFINE_TRANFORMATIONS = new javax.swing.JComboBox<>();
+    public static canvas.JavaDraw2DPanelM panelPaint;
     private javax.swing.JPanel vPnlAtributos;
     private javax.swing.JPanel vPnlDatos;
     private javax.swing.JPanel vPnlModosEd;

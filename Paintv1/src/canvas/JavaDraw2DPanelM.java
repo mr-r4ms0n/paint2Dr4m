@@ -51,7 +51,7 @@ import javax.swing.JPanel;
 public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMotionListener
 {
 
-    public static ArrayList<MyShape> shapes = new ArrayList<>();
+    private ArrayList<MyShape> shapes = new ArrayList<>();
     public static final int RECTANGLE = 0;
     public static final int ROUNDRECTANGLE2D = 1;
     public static final int ELLIPSE2D = 2;
@@ -155,8 +155,11 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 if ((shapes.get(i).getStrokeTexture() == null))
                 {
                     g2.setColor(shapes.get(i).getStrokeColor());
+                } else
+                {
+                    g2.setPaint((Paint) shapes.get(i).getStrokeTexture());
                 }
-                g2.setPaint((Paint) shapes.get(i).getStrokeTexture());
+
                 g2.setStroke(shapes.get(i).getStroke());
                 g2.draw(shapes.get(i).getShape());
                 //g2.fill(shapes.get(i).getShape());
@@ -253,7 +256,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
      * Seteamos la seleccion de las figuras a false (Metodo complementario de la
      * parte del evento MousePressed)
      */
-    public static void setSelectedRentagle()
+    public void setSelectedRentagle()
     {
         for (int i = 0; i < shapes.size(); i++)
         {
@@ -268,7 +271,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
         p = ev.getPoint();
         Shape s = null;
 
-        if (Menu.vCBox_AFFINE_TRANFORMATIONS.getSelectedIndex() == 0) //Si no hay niguna tranformacion activa entonces es hora de dibujar
+        if (Menu.jCTransformaciones.getSelectedIndex() == 0) //Si no hay niguna tranformacion activa entonces es hora de dibujar
         {
             switch (shapeType)
             {
@@ -365,7 +368,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 {
                     double x0 = shapes.get(i).getShape().getBounds().x + shapes.get(i).getShape().getBounds().width / 2;
                     double y0 = shapes.get(i).getShape().getBounds().y + shapes.get(i).getShape().getBounds().height / 2;
-                    switch (Menu.vCBox_AFFINE_TRANFORMATIONS.getSelectedIndex())
+                    switch (Menu.jCTransformaciones.getSelectedIndex())
                     {
                         case 1:
                             CONFIG_AFFINE_TRANSFORM.setToTranslation(p.x - p1.x, p.y - p1.y);
@@ -412,7 +415,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
         //g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setXORMode(Color.white);
         Point p1 = (Point) points.get(pointIndex - 1);
-        if (Menu.vCBox_AFFINE_TRANFORMATIONS.getSelectedIndex() == 0) //Si no hay niguna tranformacion activa entonces es hora de dibujar
+        if (Menu.jCTransformaciones.getSelectedIndex() == 0) //Si no hay niguna tranformacion activa entonces es hora de dibujar
         {
             switch (shapeType)
             {
@@ -616,7 +619,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                     double x0 = shapes.get(i).getShape().getBounds().x + shapes.get(i).getShape().getBounds().width / 2;
                     double y0 = shapes.get(i).getShape().getBounds().y + shapes.get(i).getShape().getBounds().height / 2;
                     p = ev.getPoint();
-                    switch (Menu.vCBox_AFFINE_TRANFORMATIONS.getSelectedIndex())
+                    switch (Menu.jCTransformaciones.getSelectedIndex())
                     {
                         case 1:
                             CONFIG_AFFINE_TRANSFORM.setToTranslation(p.x - p1.x, p.y - p1.y);
@@ -644,5 +647,15 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 }
             }
         }
+    }
+
+    public ArrayList<MyShape> getShapes()
+    {
+        return shapes;
+    }
+
+    public void setShapes(ArrayList<MyShape> shapes)
+    {
+        this.shapes = shapes;
     }
 }
