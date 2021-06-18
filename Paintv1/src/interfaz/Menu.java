@@ -5,26 +5,35 @@
  */
 package interfaz;
 
+import canvas.MyShape;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
+import java.awt.Shape;
+import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 import javax.swing.JColorChooser;
 
 /**
  *
- * @author kenit
+ * @author Dann
  */
 public class Menu extends javax.swing.JFrame
 {
 
+    //Variables booleandas que ayudan a detectar que tipo de seleccion se esta usando
     public static boolean selected = false;
     public static boolean selectedM = false;
+    public static boolean selectedT = false;
+    //Variables que ayudan a colocarle atributos a una figura
     public static boolean setStrokeColor = false;
     public static Color strokeColor1 = null;
     public static Color strokeColor2 = null;
     public static BufferedImage bi;
+
+    //Variables que ayudan a saber el tipo de color y contorno que se busca para una figura
+    public static int tipo_ContornoT;
 
     /**
      * Creates new form Menu
@@ -33,12 +42,85 @@ public class Menu extends javax.swing.JFrame
     {
         initComponents();
         jBSelectStrokeAtributo2.setVisible(false);
-        System.out.println(getBounds());
+        modoCBasico();
     }
 
-    public void noSelection()
+    /**
+     * Método encargado de bloquear las opciones que no se relacionen con el
+     * modo de creacion basico.
+     */
+    public void modoCBasico()
     {
+        jBCAvanzada.setEnabled(false);
+        jBEdicion.setEnabled(false);
+        jPOperacionesArea.setVisible(false);
+        jPSeleccion.setVisible(false);
+        modoEdicion(false);
+    }
 
+    /**
+     * Método que bloquea los botones de las figuras segun el parametro
+     * proporcionado.
+     *
+     * @param atr
+     */
+    public void bloqueaFigs(boolean atr)
+    {
+        jButton3.setEnabled(atr);
+        jButton14.setEnabled(atr);
+        jButton15.setEnabled(atr);
+        jButton16.setEnabled(atr);
+        jButton17.setEnabled(atr);
+        jButton18.setEnabled(atr);
+        jButton19.setEnabled(atr);
+        jButton20.setEnabled(atr);
+        jButton4.setEnabled(atr);
+        jButton5.setEnabled(atr);
+        jButton6.setEnabled(atr);
+        jButton7.setEnabled(atr);
+        jButton8.setEnabled(atr);
+        jButton9.setEnabled(atr);
+        jButton10.setEnabled(atr);
+        jButton11.setEnabled(atr);
+        jButton12.setEnabled(atr);
+        jButton13.setEnabled(atr);
+        jButton26.setEnabled(atr);
+    }
+
+    /**
+     * Método encargado de habilitar las opciones que no se relacionen con el
+     * modo de creacion avanzada.
+     */
+    public void modoAvanzado(boolean atr)
+    {
+        jPSeleccion.setVisible(atr);
+        jPOperacionesArea.setVisible(atr);
+    }
+
+    /**
+     * Metodo encargado de desbloquear las opciones que no se relacionen con el
+     * modo de edicion de figuras
+     */
+    public void modoEdicion(boolean atr)
+    {
+        //Panel de contorno
+        jBSelectStrokeAtributo.setEnabled(atr);
+        jBSelectStrokeAtributo2.setEnabled(atr);
+        jBSelectStrokeRnd.setEnabled(atr);
+        jRadioBColor.setEnabled(atr);
+        jRadioGradiente.setEnabled(atr);
+        jRadioBImagen.setEnabled(atr);
+        jCTipoBorde.setEnabled(atr);
+        jSGrosorBorde.setEnabled(atr);
+        //Panel de relleno
+        jBColorRelleno.setEnabled(atr);
+        jBColorRellenoRnd.setEnabled(atr);
+        jRCSolido.setEnabled(atr);
+        jRCGradiente.setEnabled(atr);
+        jRRellenoImagen.setEnabled(atr);
+        //Transparencia y angulo
+        jSTransparencia.setEnabled(atr);
+        jSAngulo.setEnabled(atr);
     }
 
     /**
@@ -56,37 +138,36 @@ public class Menu extends javax.swing.JFrame
         jPanel2 = new javax.swing.JPanel();
         vPnlAtributos = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
+        jPEContorno = new javax.swing.JPanel();
         jBSelectStrokeAtributo = new javax.swing.JButton();
         jBSelectStrokeRnd = new javax.swing.JButton();
         jRadioBColor = new javax.swing.JRadioButton();
         jRadioBImagen = new javax.swing.JRadioButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jSpinner2 = new javax.swing.JSpinner();
+        jCTipoBorde = new javax.swing.JComboBox<>();
+        jSGrosorBorde = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
         jRadioGradiente = new javax.swing.JRadioButton();
         jBSelectStrokeAtributo2 = new javax.swing.JButton();
         JPContorno = new canvas.GradientPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jButton24 = new javax.swing.JButton();
-        jButton25 = new javax.swing.JButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
+        jPERelleno = new javax.swing.JPanel();
+        jBColorRelleno = new javax.swing.JButton();
+        jBColorRellenoRnd = new javax.swing.JButton();
+        jRCSolido = new javax.swing.JRadioButton();
+        jRCGradiente = new javax.swing.JRadioButton();
+        jRRellenoImagen = new javax.swing.JRadioButton();
         jPanel12 = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
-        jSlider1 = new javax.swing.JSlider();
-        jPanel11 = new javax.swing.JPanel();
-        jSpinner1 = new javax.swing.JSpinner();
+        jPEAtributos = new javax.swing.JPanel();
+        jSTransparencia = new javax.swing.JSlider();
+        JPRotar = new javax.swing.JPanel();
+        jSAngulo = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         vPnlModosEd = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton23 = new javax.swing.JButton();
+        jBCBasica = new javax.swing.JButton();
+        jBCAvanzada = new javax.swing.JButton();
+        jBEdicion = new javax.swing.JButton();
         jPSeleccion = new javax.swing.JPanel();
         jToggleButton6 = new javax.swing.JToggleButton();
-        jToggleButton7 = new javax.swing.JToggleButton();
         jToggleButton8 = new javax.swing.JToggleButton();
         jToggleButton11 = new javax.swing.JToggleButton();
         jPOperacionesArea = new javax.swing.JPanel();
@@ -137,8 +218,10 @@ public class Menu extends javax.swing.JFrame
         jPanel2.setBackground(new java.awt.Color(153, 153, 255));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jPanel8.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contorno", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPEContorno.setBackground(new java.awt.Color(204, 204, 255));
+        jPEContorno.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contorno", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         jBSelectStrokeAtributo.setText("Color 1");
         jBSelectStrokeAtributo.addActionListener(new java.awt.event.ActionListener()
@@ -178,28 +261,28 @@ public class Menu extends javax.swing.JFrame
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Continuo", "Punteado" }));
-        jComboBox1.addItemListener(new java.awt.event.ItemListener()
+        jCTipoBorde.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Continuo", "Punteado" }));
+        jCTipoBorde.addItemListener(new java.awt.event.ItemListener()
         {
             public void itemStateChanged(java.awt.event.ItemEvent evt)
             {
-                jComboBox1ItemStateChanged(evt);
+                jCTipoBordeItemStateChanged(evt);
             }
         });
-        jComboBox1.addActionListener(new java.awt.event.ActionListener()
+        jCTipoBorde.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jComboBox1ActionPerformed(evt);
+                jCTipoBordeActionPerformed(evt);
             }
         });
 
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(1, 1, 5, 1));
-        jSpinner2.addChangeListener(new javax.swing.event.ChangeListener()
+        jSGrosorBorde.setModel(new javax.swing.SpinnerNumberModel(1, 1, 5, 1));
+        jSGrosorBorde.addChangeListener(new javax.swing.event.ChangeListener()
         {
             public void stateChanged(javax.swing.event.ChangeEvent evt)
             {
-                jSpinner2StateChanged(evt);
+                jSGrosorBordeStateChanged(evt);
             }
         });
 
@@ -234,62 +317,60 @@ public class Menu extends javax.swing.JFrame
         );
         JPContornoLayout.setVerticalGroup(
             JPContornoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 93, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jRadioBColor, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPEContornoLayout = new javax.swing.GroupLayout(jPEContorno);
+        jPEContorno.setLayout(jPEContornoLayout);
+        jPEContornoLayout.setHorizontalGroup(
+            jPEContornoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPEContornoLayout.createSequentialGroup()
+                .addGroup(jPEContornoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPEContornoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jRadioBColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jRadioGradiente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
                     .addComponent(JPContorno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPEContornoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPEContornoLayout.createSequentialGroup()
+                        .addComponent(jCTipoBorde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSGrosorBorde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jRadioBImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGroup(jPEContornoLayout.createSequentialGroup()
                         .addComponent(jBSelectStrokeAtributo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBSelectStrokeAtributo2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPEContornoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBSelectStrokeRnd, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)))
-                .addContainerGap())
+                        .addGap(14, 14, 14))))
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
+        jPEContornoLayout.setVerticalGroup(
+            jPEContornoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPEContornoLayout.createSequentialGroup()
+                .addGroup(jPEContornoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPEContornoLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPEContornoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jBSelectStrokeAtributo)
                             .addComponent(jBSelectStrokeAtributo2))
                         .addGap(18, 18, 18)
                         .addComponent(jBSelectStrokeRnd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(JPContorno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)))
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE))
+                    .addGroup(jPEContornoLayout.createSequentialGroup()
+                        .addComponent(JPContorno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGroup(jPEContornoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPEContornoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCTipoBorde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSGrosorBorde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPEContornoLayout.createSequentialGroup()
+                        .addGroup(jPEContornoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jRadioBColor)
                             .addComponent(jRadioBImagen))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -297,21 +378,21 @@ public class Menu extends javax.swing.JFrame
                         .addGap(4, 4, 4))))
         );
 
-        jPanel9.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Relleno", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPERelleno.setBackground(new java.awt.Color(204, 204, 255));
+        jPERelleno.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Relleno", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jButton24.setText("Seleccionar color");
+        jBColorRelleno.setText("Seleccionar color");
 
-        jButton25.setText("Random");
+        jBColorRellenoRnd.setText("Random");
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("Color Solido");
+        buttonGroup1.add(jRCSolido);
+        jRCSolido.setText("Color Solido");
 
-        buttonGroup1.add(jRadioButton4);
-        jRadioButton4.setText("Color Gradiente");
+        buttonGroup1.add(jRCGradiente);
+        jRCGradiente.setText("Color Gradiente");
 
-        buttonGroup1.add(jRadioButton5);
-        jRadioButton5.setText("Imagen");
+        buttonGroup1.add(jRRellenoImagen);
+        jRRellenoImagen.setText("Imagen");
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -324,89 +405,89 @@ public class Menu extends javax.swing.JFrame
             .addGap(0, 57, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPERellenoLayout = new javax.swing.GroupLayout(jPERelleno);
+        jPERelleno.setLayout(jPERellenoLayout);
+        jPERellenoLayout.setHorizontalGroup(
+            jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPERellenoLayout.createSequentialGroup()
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addComponent(jRadioButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                .addGroup(jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jBColorRellenoRnd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBColorRelleno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(jPERellenoLayout.createSequentialGroup()
+                .addComponent(jRCSolido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton4)
+                .addComponent(jRCGradiente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jRRellenoImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
+        jPERellenoLayout.setVerticalGroup(
+            jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPERellenoLayout.createSequentialGroup()
+                .addGroup(jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPERellenoLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton24)
+                        .addComponent(jBColorRelleno)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton25)
+                        .addComponent(jBColorRellenoRnd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPERellenoLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton5)
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioButton3)
-                        .addComponent(jRadioButton4)))
+                .addGroup(jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jRRellenoImagen)
+                    .addGroup(jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jRCSolido)
+                        .addComponent(jRCGradiente)))
                 .addContainerGap())
         );
 
-        jPanel10.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transparencia", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPEAtributos.setBackground(new java.awt.Color(204, 204, 255));
+        jPEAtributos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transparencia", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPEAtributosLayout = new javax.swing.GroupLayout(jPEAtributos);
+        jPEAtributos.setLayout(jPEAtributosLayout);
+        jPEAtributosLayout.setHorizontalGroup(
+            jPEAtributosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPEAtributosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jSTransparencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        jPEAtributosLayout.setVerticalGroup(
+            jPEAtributosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPEAtributosLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSTransparencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
-        jPanel11.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rotar", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        JPRotar.setBackground(new java.awt.Color(204, 204, 255));
+        JPRotar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rotar", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 360, 1));
+        jSAngulo.setModel(new javax.swing.SpinnerNumberModel(0, 0, 360, 1));
 
         jLabel3.setText("Angulo");
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+        javax.swing.GroupLayout JPRotarLayout = new javax.swing.GroupLayout(JPRotar);
+        JPRotar.setLayout(JPRotarLayout);
+        JPRotarLayout.setHorizontalGroup(
+            JPRotarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPRotarLayout.createSequentialGroup()
                 .addGap(58, 58, 58)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSAngulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+        JPRotarLayout.setVerticalGroup(
+            JPRotarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JPRotarLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(JPRotarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSAngulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
@@ -415,22 +496,27 @@ public class Menu extends javax.swing.JFrame
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(JPRotar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPEAtributos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPERelleno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPEContorno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPEContorno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPERelleno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPEAtributos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+                .addComponent(JPRotar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout vPnlAtributosLayout = new javax.swing.GroupLayout(vPnlAtributos);
@@ -443,21 +529,43 @@ public class Menu extends javax.swing.JFrame
         );
         vPnlAtributosLayout.setVerticalGroup(
             vPnlAtributosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel2.add(vPnlAtributos, java.awt.BorderLayout.LINE_END);
 
+        vPnlModosEd.setBackground(new java.awt.Color(255, 255, 255));
         vPnlModosEd.setPreferredSize(new java.awt.Dimension(1369, 110));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Modo", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jButton1.setText("Creacion Basica");
+        jBCBasica.setText("Creacion Basica");
+        jBCBasica.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jBCBasicaActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Creacion Avanzada");
+        jBCAvanzada.setText("Creacion Avanzada");
+        jBCAvanzada.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jBCAvanzadaActionPerformed(evt);
+            }
+        });
 
-        jButton23.setText("Edicion");
+        jBEdicion.setText("Edicion");
+        jBEdicion.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jBEdicionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -467,11 +575,11 @@ public class Menu extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(jBCBasica)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                        .addComponent(jBCAvanzada))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jButton23)
+                        .addComponent(jBEdicion)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -480,10 +588,10 @@ public class Menu extends javax.swing.JFrame
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jBCBasica)
+                    .addComponent(jBCAvanzada))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton23)
+                .addComponent(jBEdicion)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -494,6 +602,13 @@ public class Menu extends javax.swing.JFrame
 
         jToggleButton6.setText("Objeto");
         jToggleButton6.setToolTipText("Seleccion de un objeto");
+        jToggleButton6.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                jToggleButton6StateChanged(evt);
+            }
+        });
         jToggleButton6.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -502,21 +617,25 @@ public class Menu extends javax.swing.JFrame
             }
         });
 
-        jToggleButton7.setText("Acumulada");
-        jToggleButton7.setToolTipText("Seleccion Acumulada");
-        jToggleButton7.addActionListener(new java.awt.event.ActionListener()
+        jToggleButton8.setText("Multiple");
+        jToggleButton8.setToolTipText("Seleccion Mutiple");
+        jToggleButton8.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jToggleButton7ActionPerformed(evt);
+                jToggleButton8ActionPerformed(evt);
             }
         });
 
-        jToggleButton8.setText("Multiple");
-        jToggleButton8.setToolTipText("Seleccion Mutiple");
-
         jToggleButton11.setText("Todos");
         jToggleButton11.setToolTipText("Seleccionar todo");
+        jToggleButton11.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jToggleButton11ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPSeleccionLayout = new javax.swing.GroupLayout(jPSeleccion);
         jPSeleccion.setLayout(jPSeleccionLayout);
@@ -524,8 +643,6 @@ public class Menu extends javax.swing.JFrame
             jPSeleccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPSeleccionLayout.createSequentialGroup()
                 .addComponent(jToggleButton6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToggleButton8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -537,7 +654,6 @@ public class Menu extends javax.swing.JFrame
             .addGroup(jPSeleccionLayout.createSequentialGroup()
                 .addGroup(jPSeleccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jToggleButton6)
-                    .addComponent(jToggleButton7)
                     .addComponent(jToggleButton8)
                     .addComponent(jToggleButton11))
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -550,14 +666,42 @@ public class Menu extends javax.swing.JFrame
 
         jToggleButton12.setText("A");
         jToggleButton12.setToolTipText("Creación basica de figuras");
+        jToggleButton12.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jToggleButton12ActionPerformed(evt);
+            }
+        });
 
         jToggleButton13.setText("I");
         jToggleButton13.setToolTipText("");
+        jToggleButton13.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jToggleButton13ActionPerformed(evt);
+            }
+        });
 
         jToggleButton14.setText("EO");
         jToggleButton14.setToolTipText("Modo edición");
+        jToggleButton14.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jToggleButton14ActionPerformed(evt);
+            }
+        });
 
         jToggleButton15.setText("S");
+        jToggleButton15.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jToggleButton15ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPOperacionesAreaLayout = new javax.swing.GroupLayout(jPOperacionesArea);
         jPOperacionesArea.setLayout(jPOperacionesAreaLayout);
@@ -586,6 +730,8 @@ public class Menu extends javax.swing.JFrame
         vPnlModosEd.add(jPOperacionesArea);
 
         jPanel2.add(vPnlModosEd, java.awt.BorderLayout.PAGE_START);
+
+        vpnlFiguras.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Java2D Primitivos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
@@ -806,9 +952,9 @@ public class Menu extends javax.swing.JFrame
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vpnlFigurasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(vpnlFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
                 .addContainerGap())
         );
         vpnlFigurasLayout.setVerticalGroup(
@@ -820,10 +966,12 @@ public class Menu extends javax.swing.JFrame
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
 
         jPanel2.add(vpnlFiguras, java.awt.BorderLayout.LINE_START);
+
+        vPnlDatos.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout vPnlDatosLayout = new javax.swing.GroupLayout(vPnlDatos);
         vPnlDatos.setLayout(vPnlDatosLayout);
@@ -838,15 +986,17 @@ public class Menu extends javax.swing.JFrame
 
         jPanel2.add(vPnlDatos, java.awt.BorderLayout.PAGE_END);
 
+        javaDraw2DPanelM2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+
         javax.swing.GroupLayout javaDraw2DPanelM2Layout = new javax.swing.GroupLayout(javaDraw2DPanelM2);
         javaDraw2DPanelM2.setLayout(javaDraw2DPanelM2Layout);
         javaDraw2DPanelM2Layout.setHorizontalGroup(
             javaDraw2DPanelM2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 829, Short.MAX_VALUE)
+            .addGap(0, 827, Short.MAX_VALUE)
         );
         javaDraw2DPanelM2Layout.setVerticalGroup(
             javaDraw2DPanelM2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 625, Short.MAX_VALUE)
+            .addGap(0, 622, Short.MAX_VALUE)
         );
 
         jPanel2.add(javaDraw2DPanelM2, java.awt.BorderLayout.CENTER);
@@ -854,6 +1004,7 @@ public class Menu extends javax.swing.JFrame
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton15ActionPerformed
@@ -984,9 +1135,22 @@ public class Menu extends javax.swing.JFrame
 
     private void jToggleButton6ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jToggleButton6ActionPerformed
     {//GEN-HEADEREND:event_jToggleButton6ActionPerformed
-        selected = true;
-        selectedM = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.NO_SELECTED;
+        if (!selected)
+        {
+            selected = true;
+            selectedM = false;
+            javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.NO_SELECTED;
+            jToggleButton8.setEnabled(false);
+            jToggleButton11.setEnabled(false);
+        } else
+        {
+            selected = false;
+            selectedM = false;
+            javaDraw2DPanelM2.setSelectedRentagle();
+            javaDraw2DPanelM2.repaint();
+            jToggleButton8.setEnabled(true);
+            jToggleButton11.setEnabled(true);
+        }
     }//GEN-LAST:event_jToggleButton6ActionPerformed
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton26ActionPerformed
@@ -996,13 +1160,6 @@ public class Menu extends javax.swing.JFrame
         javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.BAT;
     }//GEN-LAST:event_jButton26ActionPerformed
 
-    private void jToggleButton7ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jToggleButton7ActionPerformed
-    {//GEN-HEADEREND:event_jToggleButton7ActionPerformed
-        selectedM = true;
-        selected = false;
-        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.NO_SELECTED;
-    }//GEN-LAST:event_jToggleButton7ActionPerformed
-
     private void jBSelectStrokeAtributoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBSelectStrokeAtributoActionPerformed
     {//GEN-HEADEREND:event_jBSelectStrokeAtributoActionPerformed
         if (jBSelectStrokeAtributo.getText().equals("Color 1"))
@@ -1010,16 +1167,27 @@ public class Menu extends javax.swing.JFrame
             JColorChooser Selectorcolor = new JColorChooser();
             strokeColor1 = Selectorcolor.showDialog(null, "Seleccione un Color", Color.BLUE);
             //Mandamos el color seleccionado al canvas (JavaDraw2DPanel)
-            javaDraw2DPanelM2.strokeColor = strokeColor1;
-            JPContorno.setC1(strokeColor1);
-            JPContorno.repaint();
-            
+            if (tipo_ContornoT == 1)
+            {
+                javaDraw2DPanelM2.strokeColor = strokeColor1;
+                JPContorno.setC1(strokeColor1);
+                JPContorno.repaint();
+                javaDraw2DPanelM2.strokeTexture = null;
+            } else
+            {
+                if (tipo_ContornoT == 2)
+                {
+                    javaDraw2DPanelM2.strokeTexture = new GradientPaint(0.0f, 0.0f, strokeColor1, 0.0f, 10.0f, strokeColor2, true);
+                    JPContorno.setC1(strokeColor1);
+                    JPContorno.repaint();
+                }
+            }
+
         } else
         {
             NewJDialog txt = new NewJDialog(this, true);
             txt.setVisible(true);
         }
-
     }//GEN-LAST:event_jBSelectStrokeAtributoActionPerformed
 
     private void jBSelectStrokeRndActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBSelectStrokeRndActionPerformed
@@ -1044,26 +1212,26 @@ public class Menu extends javax.swing.JFrame
         }
     }//GEN-LAST:event_jRadioBImagenStateChanged
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBox1ActionPerformed
-    {//GEN-HEADEREND:event_jComboBox1ActionPerformed
+    private void jCTipoBordeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCTipoBordeActionPerformed
+    {//GEN-HEADEREND:event_jCTipoBordeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jCTipoBordeActionPerformed
 
-    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_jComboBox1ItemStateChanged
-    {//GEN-HEADEREND:event_jComboBox1ItemStateChanged
-        if (jComboBox1.getSelectedIndex() == 0)
+    private void jCTipoBordeItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_jCTipoBordeItemStateChanged
+    {//GEN-HEADEREND:event_jCTipoBordeItemStateChanged
+        if (jCTipoBorde.getSelectedIndex() == 0)
         {
-            BasicStroke bs = new BasicStroke(Integer.parseInt(jSpinner2.getValue().toString()));
+            BasicStroke bs = new BasicStroke(Integer.parseInt(jSGrosorBorde.getValue().toString()));
             javaDraw2DPanelM2.stroke = bs;
         } else
         {
-            if (jComboBox1.getSelectedIndex() == 1)
+            if (jCTipoBorde.getSelectedIndex() == 1)
             {
                 float[] punteo1 =
                 {
                     10.0f, 4.0f
                 };
-                BasicStroke bs = new BasicStroke(Integer.parseInt(jSpinner2.getValue().toString()),
+                BasicStroke bs = new BasicStroke(Integer.parseInt(jSGrosorBorde.getValue().toString()),
                         BasicStroke.CAP_ROUND,
                         BasicStroke.JOIN_MITER,
                         3.0f,
@@ -1073,23 +1241,23 @@ public class Menu extends javax.swing.JFrame
             }
 
         }
-    }//GEN-LAST:event_jComboBox1ItemStateChanged
+    }//GEN-LAST:event_jCTipoBordeItemStateChanged
 
-    private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_jSpinner2StateChanged
-    {//GEN-HEADEREND:event_jSpinner2StateChanged
-        if (jComboBox1.getSelectedIndex() == 0)
+    private void jSGrosorBordeStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_jSGrosorBordeStateChanged
+    {//GEN-HEADEREND:event_jSGrosorBordeStateChanged
+        if (jCTipoBorde.getSelectedIndex() == 0)
         {
-            BasicStroke bs = new BasicStroke(Integer.parseInt(jSpinner2.getValue().toString()));
+            BasicStroke bs = new BasicStroke(Integer.parseInt(jSGrosorBorde.getValue().toString()));
             javaDraw2DPanelM2.stroke = bs;
         } else
         {
-            if (jComboBox1.getSelectedIndex() == 1)
+            if (jCTipoBorde.getSelectedIndex() == 1)
             {
                 float[] punteo1 =
                 {
                     10.0f, 15.0f
                 };
-                BasicStroke bs = new BasicStroke(Integer.parseInt(jSpinner2.getValue().toString()),
+                BasicStroke bs = new BasicStroke(Integer.parseInt(jSGrosorBorde.getValue().toString()),
                         BasicStroke.CAP_ROUND,
                         BasicStroke.JOIN_MITER,
                         3.0f,
@@ -1097,9 +1265,8 @@ public class Menu extends javax.swing.JFrame
                         10.0f);
                 javaDraw2DPanelM2.stroke = bs;
             }
-
         }
-    }//GEN-LAST:event_jSpinner2StateChanged
+    }//GEN-LAST:event_jSGrosorBordeStateChanged
 
     private void jBSelectStrokeAtributo2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBSelectStrokeAtributo2ActionPerformed
     {//GEN-HEADEREND:event_jBSelectStrokeAtributo2ActionPerformed
@@ -1111,6 +1278,7 @@ public class Menu extends javax.swing.JFrame
             JPContorno.setC2(strokeColor2);
             //Mandamos el color seleccionado al canvas (JavaDraw2DPanel)
             javaDraw2DPanelM2.strokeColor = strokeColor2;
+            javaDraw2DPanelM2.strokeTexture = new GradientPaint(0.0f, 0.0f, strokeColor1, 0.0f, 10.0f, strokeColor2, true);
             JPContorno.repaint();
         }
     }//GEN-LAST:event_jBSelectStrokeAtributo2ActionPerformed
@@ -1118,21 +1286,207 @@ public class Menu extends javax.swing.JFrame
     private void jRadioBColorActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioBColorActionPerformed
     {//GEN-HEADEREND:event_jRadioBColorActionPerformed
         JPContorno.setTextura("Color");
-         JPContorno.repaint();
+        JPContorno.repaint();
+        tipo_ContornoT = 1; //Color solido
     }//GEN-LAST:event_jRadioBColorActionPerformed
 
     private void jRadioGradienteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioGradienteActionPerformed
     {//GEN-HEADEREND:event_jRadioGradienteActionPerformed
-         if (jRadioGradiente.isSelected())
+        if (jRadioGradiente.isSelected())
         {
             jBSelectStrokeAtributo2.setVisible(true);
             JPContorno.setTextura("Gr");
-            System.out.println(JPContorno.getTextura());
-        }else
+            tipo_ContornoT = 2; //Gradiente
+        } else
         {
             jBSelectStrokeAtributo2.setVisible(false);
         }
     }//GEN-LAST:event_jRadioGradienteActionPerformed
+
+    private void jToggleButton6StateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_jToggleButton6StateChanged
+    {//GEN-HEADEREND:event_jToggleButton6StateChanged
+
+
+    }//GEN-LAST:event_jToggleButton6StateChanged
+
+    private void jToggleButton8ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jToggleButton8ActionPerformed
+    {//GEN-HEADEREND:event_jToggleButton8ActionPerformed
+        if (!selectedM)
+        {
+            selectedM = true;
+            selected = false;
+            jToggleButton6.setEnabled(false);
+            jToggleButton11.setEnabled(false);
+        } else
+        {
+            selectedM = false;
+            selected = false;
+            javaDraw2DPanelM2.setSelectedRentagle();
+            javaDraw2DPanelM2.repaint();
+            jToggleButton6.setEnabled(true);
+            jToggleButton11.setEnabled(true);
+        }
+
+        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.NO_SELECTED;
+    }//GEN-LAST:event_jToggleButton8ActionPerformed
+
+    private void jToggleButton11ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jToggleButton11ActionPerformed
+    {//GEN-HEADEREND:event_jToggleButton11ActionPerformed
+        if (!selectedT)
+        {
+            selectedT = true;
+            selected = false;
+            selectedM = false;
+            jToggleButton6.setEnabled(false);
+            jToggleButton8.setEnabled(false);
+            javaDraw2DPanelM2.mousePressed(null);
+        } else
+        {
+            selectedT = false;
+            selected = false;
+            selectedM = false;
+            javaDraw2DPanelM2.setSelectedRentagle();
+            javaDraw2DPanelM2.repaint();
+            jToggleButton6.setEnabled(true);
+            jToggleButton8.setEnabled(true);
+        }
+
+        javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.NO_SELECTED;
+    }//GEN-LAST:event_jToggleButton11ActionPerformed
+
+    private void jBCBasicaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBCBasicaActionPerformed
+    {//GEN-HEADEREND:event_jBCBasicaActionPerformed
+        if (jBCBasica.isSelected())
+        {
+            jBCAvanzada.setEnabled(false);
+            jBEdicion.setEnabled(false);
+            //System.out.println("entre");
+            jBCBasica.setSelected(false);
+            bloqueaFigs(true);
+        } else
+        {
+            jBCBasica.setSelected(true);
+            jBCAvanzada.setEnabled(true);
+            jBEdicion.setEnabled(true);
+            //System.out.println("entre al true");
+            bloqueaFigs(false);
+            javaDraw2DPanelM2.shapeType = javaDraw2DPanelM2.NO_SELECTED;
+        }
+    }//GEN-LAST:event_jBCBasicaActionPerformed
+
+    private void jBCAvanzadaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBCAvanzadaActionPerformed
+    {//GEN-HEADEREND:event_jBCAvanzadaActionPerformed
+        if (jBCAvanzada.isSelected())
+        {
+            modoAvanzado(true);
+            jBCBasica.setEnabled(false);
+            jBEdicion.setEnabled(false);
+            jBCAvanzada.setSelected(false);
+
+        } else
+        {
+            modoAvanzado(false);
+            jBCBasica.setEnabled(true);
+            jBEdicion.setEnabled(true);
+            jBCAvanzada.setSelected(true);
+
+        }
+    }//GEN-LAST:event_jBCAvanzadaActionPerformed
+
+    private void jBEdicionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBEdicionActionPerformed
+    {//GEN-HEADEREND:event_jBEdicionActionPerformed
+        if (jBEdicion.isSelected())
+        {
+            modoEdicion(true);
+            jBCBasica.setEnabled(false);
+            jBCAvanzada.setEnabled(false);
+            jBEdicion.setSelected(false);
+            jPSeleccion.setVisible(true);
+        } else
+        {
+            modoEdicion(false);
+            jBCBasica.setEnabled(true);
+            jBCAvanzada.setEnabled(true);
+            jBEdicion.setSelected(true);
+            jPSeleccion.setVisible(false);
+        }
+    }//GEN-LAST:event_jBEdicionActionPerformed
+
+    private void jToggleButton12ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jToggleButton12ActionPerformed
+    {//GEN-HEADEREND:event_jToggleButton12ActionPerformed
+        operaciones(1);
+    }//GEN-LAST:event_jToggleButton12ActionPerformed
+
+    private void jToggleButton13ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jToggleButton13ActionPerformed
+    {//GEN-HEADEREND:event_jToggleButton13ActionPerformed
+        operaciones(2);
+    }//GEN-LAST:event_jToggleButton13ActionPerformed
+
+    private void jToggleButton14ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jToggleButton14ActionPerformed
+    {//GEN-HEADEREND:event_jToggleButton14ActionPerformed
+        operaciones(3);
+    }//GEN-LAST:event_jToggleButton14ActionPerformed
+
+    private void jToggleButton15ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jToggleButton15ActionPerformed
+    {//GEN-HEADEREND:event_jToggleButton15ActionPerformed
+        operaciones(4);
+    }//GEN-LAST:event_jToggleButton15ActionPerformed
+
+    public void operaciones(int opType)
+    {
+        Area s = new Area(); //Area que contenra todas nuestras figuras
+        boolean figMadre = false; //Para agarrar la primer figura que se encuentra
+        boolean figOperada = false; //
+        MyShape figAux = null; //Figura auxiliar que se usara para recuperar las propiedades de la figura antigua
+
+        //Primero recorremos todo el arreglo buscando la primer figura que existe en nuestro arreglo
+        for (int i = 0; i < javaDraw2DPanelM2.shapes.size(); i++)
+        {
+            //Primero agarramos la primer figura del arreglo, de tal manera que si esta seleccionada y la figura madre es false entonces 
+            //entramos y seleccionamos la misma.
+            if (javaDraw2DPanelM2.shapes.get(i).getSelected() && !figMadre)
+            {
+                s = new Area(javaDraw2DPanelM2.shapes.get(i).getShape()); //Guardamos la figura como Area en S
+                figMadre = true; //Hacemos true para que ya se tenga una figura madre de base
+                figAux = javaDraw2DPanelM2.shapes.get(i);//Obtenemos los parametros de la figura madre (Color, relleno etc)
+                javaDraw2DPanelM2.shapes.remove(i); //Eliminamos la figura madre del arreglo de shapes
+                i--; //Le quitamos 1 para que no encuentre a la misma figura
+
+                //Posteriormente si ya tenmos una figura madre recorremos las demas figuras
+            } else if (javaDraw2DPanelM2.shapes.get(i).getSelected() && figMadre)
+            {
+                //Creamos un area con la figura que este seleccionada
+                Area aAux = new Area(javaDraw2DPanelM2.shapes.get(i).getShape());
+                //Dependiendo el caso que se proporcione hacemos la operacion boolena que corresponde
+                switch (opType)
+                {
+                    case 1:
+                        s.add(aAux);
+                        break;
+                    case 2:
+                        s.intersect(aAux);
+                        break;
+                    case 3:
+                        s.subtract(aAux);
+                        break;
+                    case 4:
+                        s.exclusiveOr(aAux);
+                        break;
+                }
+                //Removemos la figura que se tiene en el arreglo y se incluyo dentro del area
+                javaDraw2DPanelM2.shapes.remove(i);
+                //Cuando ya tenemos una Area hecha con minimo 2 figuras decimos que ya hay una figura con operaciones booleanas por lo que se procede a agregar
+                figOperada = true;
+                i--;
+            }
+        }
+
+        if (figOperada)
+        {
+            Shape newShape = s;
+            javaDraw2DPanelM2.shapes.add(new MyShape(newShape));
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -1148,7 +1502,7 @@ public class Menu extends javax.swing.JFrame
         {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
             {
-                if ("Nimbus".equals(info.getName()))
+                if ("Windows".equals(info.getName()))
                 {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
@@ -1181,11 +1535,16 @@ public class Menu extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static canvas.GradientPanel JPContorno;
+    private javax.swing.JPanel JPRotar;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jBCAvanzada;
+    private javax.swing.JButton jBCBasica;
+    private javax.swing.JButton jBColorRelleno;
+    private javax.swing.JButton jBColorRellenoRnd;
+    private javax.swing.JButton jBEdicion;
     private javax.swing.JButton jBSelectStrokeAtributo;
     private javax.swing.JButton jBSelectStrokeAtributo2;
     private javax.swing.JButton jBSelectStrokeRnd;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
@@ -1196,11 +1555,7 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1209,14 +1564,15 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jCTipoBorde;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPEAtributos;
+    private javax.swing.JPanel jPEContorno;
+    private javax.swing.JPanel jPERelleno;
     private javax.swing.JPanel jPOperacionesArea;
     private javax.swing.JPanel jPSeleccion;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1224,24 +1580,21 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
+    private javax.swing.JRadioButton jRCGradiente;
+    private javax.swing.JRadioButton jRCSolido;
+    private javax.swing.JRadioButton jRRellenoImagen;
     private javax.swing.JRadioButton jRadioBColor;
     private javax.swing.JRadioButton jRadioBImagen;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JRadioButton jRadioGradiente;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JSpinner jSAngulo;
+    private javax.swing.JSpinner jSGrosorBorde;
+    private javax.swing.JSlider jSTransparencia;
     private javax.swing.JToggleButton jToggleButton11;
     private javax.swing.JToggleButton jToggleButton12;
     private javax.swing.JToggleButton jToggleButton13;
     private javax.swing.JToggleButton jToggleButton14;
     private javax.swing.JToggleButton jToggleButton15;
     private javax.swing.JToggleButton jToggleButton6;
-    private javax.swing.JToggleButton jToggleButton7;
     private javax.swing.JToggleButton jToggleButton8;
     private canvas.JavaDraw2DPanelM javaDraw2DPanelM2;
     private javax.swing.JPanel vPnlAtributos;

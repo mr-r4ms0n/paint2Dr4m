@@ -24,13 +24,13 @@ public class MyShape
     private Object fillTexture = null;
     private Color strokeColor = new Color(0, 0, 0);
     private Stroke stroke;
-    private AlphaComposite alphaComposite = null;
+    private float alphaComposite;
     private Boolean selected = false;
     
     public MyShape(Shape shape)
     {
         this.shape = shape;
-        this.stroke = new BasicStroke(1);
+        this.stroke = new BasicStroke(2);
     }
     
 
@@ -96,12 +96,12 @@ public class MyShape
         this.stroke = stroke;
     }
 
-    public AlphaComposite getAlphaComposite()
+    public float getAlphaComposite()
     {
         return alphaComposite;
     }
 
-    public void setAlphaComposite(AlphaComposite alphaComposite)
+    public void setAlphaComposite(float alphaComposite)
     {
         this.alphaComposite = alphaComposite;
     }
