@@ -38,10 +38,13 @@ public class Menu extends javax.swing.JFrame
     public static boolean setStrokeColor = false;
     public static Color strokeColor1 = Color.BLACK;
     public static Color strokeColor2 = Color.BLACK;
+    public static Color fillColor1 = new Color(0f, 0f, 0, 0f);
+    public static Color fillColor2 = new Color(0f, 0f, 0, 0f);
     public static BufferedImage bi;
 
     //Variables que ayudan a saber el tipo de color y contorno que se busca para una figura
     public static int tipo_ContornoT;
+    public static int tipo_RellenoT;
 
     /**
      * Creates new form Menu
@@ -121,7 +124,7 @@ public class Menu extends javax.swing.JFrame
         jCTipoBorde.setEnabled(atr);
         jSGrosorBorde.setEnabled(atr);
         //Panel de relleno
-        jBColorRelleno.setEnabled(atr);
+        jBColorRellenoRnd.setEnabled(atr);
         jBColorRellenoRnd.setEnabled(atr);
         jRCSolido.setEnabled(atr);
         jRCGradiente.setEnabled(atr);
@@ -157,12 +160,13 @@ public class Menu extends javax.swing.JFrame
         jBSelectStrokeAtributo2 = new javax.swing.JButton();
         JPContorno = new canvas.GradientPanel();
         jPERelleno = new javax.swing.JPanel();
-        jBColorRelleno = new javax.swing.JButton();
         jBColorRellenoRnd = new javax.swing.JButton();
         jRCSolido = new javax.swing.JRadioButton();
         jRCGradiente = new javax.swing.JRadioButton();
         jRRellenoImagen = new javax.swing.JRadioButton();
-        jPanel12 = new javax.swing.JPanel();
+        jBSelectFillAtributo1 = new javax.swing.JButton();
+        jBSelectFillAtributo2 = new javax.swing.JButton();
+        JPRelleno = new canvas.GradientPanel();
         jPEAtributos = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -353,7 +357,7 @@ public class Menu extends javax.swing.JFrame
                         .addComponent(jBSelectStrokeAtributo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBSelectStrokeAtributo2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 7, Short.MAX_VALUE))
+                        .addGap(0, 10, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPEContornoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBSelectStrokeRnd, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -370,7 +374,7 @@ public class Menu extends javax.swing.JFrame
                             .addComponent(jBSelectStrokeAtributo2))
                         .addGap(18, 18, 18)
                         .addComponent(jBSelectStrokeRnd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE))
                     .addGroup(jPEContornoLayout.createSequentialGroup()
                         .addComponent(JPContorno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
@@ -391,12 +395,17 @@ public class Menu extends javax.swing.JFrame
         jPERelleno.setBackground(new java.awt.Color(204, 204, 255));
         jPERelleno.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Relleno", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jBColorRelleno.setText("Seleccionar color");
-
         jBColorRellenoRnd.setText("Random");
 
         buttonGroup1.add(jRCSolido);
         jRCSolido.setText("Color Solido");
+        jRCSolido.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jRCSolidoActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(jRCGradiente);
         jRCGradiente.setText("Color Gradiente");
@@ -404,15 +413,35 @@ public class Menu extends javax.swing.JFrame
         buttonGroup1.add(jRRellenoImagen);
         jRRellenoImagen.setText("Imagen");
 
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 151, Short.MAX_VALUE)
+        jBSelectFillAtributo1.setText("Color 1");
+        jBSelectFillAtributo1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jBSelectFillAtributo1ActionPerformed(evt);
+            }
+        });
+
+        jBSelectFillAtributo2.setText("Color 2");
+        jBSelectFillAtributo2.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jBSelectFillAtributo2ActionPerformed(evt);
+            }
+        });
+
+        JPRelleno.setBackground(new java.awt.Color(255, 204, 153));
+
+        javax.swing.GroupLayout JPRellenoLayout = new javax.swing.GroupLayout(JPRelleno);
+        JPRelleno.setLayout(JPRellenoLayout);
+        JPRellenoLayout.setHorizontalGroup(
+            JPRellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 141, Short.MAX_VALUE)
         );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 57, Short.MAX_VALUE)
+        JPRellenoLayout.setVerticalGroup(
+            JPRellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPERellenoLayout = new javax.swing.GroupLayout(jPERelleno);
@@ -420,11 +449,18 @@ public class Menu extends javax.swing.JFrame
         jPERellenoLayout.setHorizontalGroup(
             jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPERellenoLayout.createSequentialGroup()
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jBColorRellenoRnd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jBColorRelleno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(JPRelleno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPERellenoLayout.createSequentialGroup()
+                        .addGap(0, 67, Short.MAX_VALUE)
+                        .addComponent(jBColorRellenoRnd, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPERellenoLayout.createSequentialGroup()
+                        .addComponent(jBSelectFillAtributo1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBSelectFillAtributo2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(jPERellenoLayout.createSequentialGroup()
                 .addComponent(jRCSolido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -436,17 +472,17 @@ public class Menu extends javax.swing.JFrame
         jPERellenoLayout.setVerticalGroup(
             jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPERellenoLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addGroup(jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPERellenoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jBColorRelleno)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBSelectFillAtributo1)
+                            .addComponent(jBSelectFillAtributo2))
+                        .addGap(14, 14, 14)
                         .addComponent(jBColorRellenoRnd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPERellenoLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGap(0, 13, Short.MAX_VALUE))
+                    .addComponent(JPRelleno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jRRellenoImagen)
                     .addGroup(jPERellenoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1036,7 +1072,7 @@ public class Menu extends javax.swing.JFrame
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         jPanel2.add(vpnlFiguras, java.awt.BorderLayout.LINE_START);
@@ -1047,7 +1083,7 @@ public class Menu extends javax.swing.JFrame
         vPnlDatos.setLayout(vPnlDatosLayout);
         vPnlDatosLayout.setHorizontalGroup(
             vPnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1614, Short.MAX_VALUE)
+            .addGap(0, 1430, Short.MAX_VALUE)
         );
         vPnlDatosLayout.setVerticalGroup(
             vPnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1062,11 +1098,11 @@ public class Menu extends javax.swing.JFrame
         panelPaint.setLayout(panelPaintLayout);
         panelPaintLayout.setHorizontalGroup(
             panelPaintLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 915, Short.MAX_VALUE)
+            .addGap(0, 736, Short.MAX_VALUE)
         );
         panelPaintLayout.setVerticalGroup(
             panelPaintLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 566, Short.MAX_VALUE)
+            .addGap(0, 589, Short.MAX_VALUE)
         );
 
         jPanel2.add(panelPaint, java.awt.BorderLayout.CENTER);
@@ -1232,6 +1268,8 @@ public class Menu extends javax.swing.JFrame
 
     private void jBSelectStrokeAtributoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBSelectStrokeAtributoActionPerformed
     {//GEN-HEADEREND:event_jBSelectStrokeAtributoActionPerformed
+
+        panelPaint.strokeTexture = null;
         if (jBSelectStrokeAtributo.getText().equals("Color 1"))
         {
             JColorChooser Selectorcolor = new JColorChooser();
@@ -1552,6 +1590,59 @@ public class Menu extends javax.swing.JFrame
         panelPaint.repaint();
     }//GEN-LAST:event_vSpinnerStateChanged
 
+    private void jBSelectFillAtributo1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBSelectFillAtributo1ActionPerformed
+    {//GEN-HEADEREND:event_jBSelectFillAtributo1ActionPerformed
+        panelPaint.fillTexture = null;
+        if (jBSelectFillAtributo1.getText().equals("Color 1"))
+        {
+            JColorChooser Selectorcolor = new JColorChooser();
+            fillColor1 = Selectorcolor.showDialog(null, "Seleccione un Color", Color.BLUE);
+            //Mandamos el color seleccionado al canvas (JavaDraw2DPanel)
+            if (tipo_RellenoT == 1)
+            {
+                panelPaint.fillColor = fillColor1;
+                JPRelleno.setC1(fillColor1);
+                JPRelleno.repaint();
+                panelPaint.fillTexture = null;
+            } else
+            {
+                if (tipo_RellenoT == 2)
+                {
+                    panelPaint.fillTexture = new GradientPaint(0.0f, 0.0f, fillColor1, 0.0f, 10.0f, fillColor2, true);
+                    JPRelleno.setC1(fillColor1);
+                    JPRelleno.repaint();
+                }
+            }
+        } else
+        {
+            NewJDialog txt = new NewJDialog(this, true);
+            txt.setVisible(true);
+        }
+    }//GEN-LAST:event_jBSelectFillAtributo1ActionPerformed
+
+    private void jBSelectFillAtributo2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBSelectFillAtributo2ActionPerformed
+    {//GEN-HEADEREND:event_jBSelectFillAtributo2ActionPerformed
+        if (jBSelectFillAtributo2.getText().equals("Color 2"))
+        {
+            System.out.println("ENTROOOOOOOO");
+            JColorChooser Selectorcolor = new JColorChooser();
+            fillColor2 = Selectorcolor.showDialog(null, "Seleccione un Color", Color.BLUE);
+            JPRelleno.setC1(fillColor1);
+            JPRelleno.setC2(fillColor2);
+            //Mandamos el color seleccionado al canvas (JavaDraw2DPanel)
+            panelPaint.fillColor = fillColor2;
+            panelPaint.fillTexture = new GradientPaint(0.0f, 0.0f, fillColor1, 0.0f, 10.0f, fillColor2, true);
+            JPRelleno.repaint();
+        }
+    }//GEN-LAST:event_jBSelectFillAtributo2ActionPerformed
+
+    private void jRCSolidoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRCSolidoActionPerformed
+    {//GEN-HEADEREND:event_jRCSolidoActionPerformed
+        JPRelleno.setTextura("Color");
+        JPRelleno.repaint();
+        tipo_RellenoT = 1; //Color solido
+    }//GEN-LAST:event_jRCSolidoActionPerformed
+
     public void operaciones(int opType)
     {
         Area s = new Area(); //Area que contenra todas nuestras figuras
@@ -1655,13 +1746,15 @@ public class Menu extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static canvas.GradientPanel JPContorno;
+    public static canvas.GradientPanel JPRelleno;
     private javax.swing.JPanel JPRotar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jBCAvanzada;
     private javax.swing.JButton jBCBasica;
-    private javax.swing.JButton jBColorRelleno;
     private javax.swing.JButton jBColorRellenoRnd;
     private javax.swing.JButton jBEdicion;
+    private javax.swing.JButton jBSelectFillAtributo1;
+    private javax.swing.JButton jBSelectFillAtributo2;
     private javax.swing.JButton jBSelectStrokeAtributo;
     private javax.swing.JButton jBSelectStrokeAtributo2;
     private javax.swing.JButton jBSelectStrokeRnd;
@@ -1698,7 +1791,6 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JPanel jPOperacionesArea;
     private javax.swing.JPanel jPSeleccion;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

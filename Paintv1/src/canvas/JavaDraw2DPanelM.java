@@ -92,7 +92,10 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     //Parte del contorno
     public static Color strokeColor = Color.BLACK;
     public static Stroke stroke = new BasicStroke(2);
-    public static Object strokeTexture = null;
+    public static Object strokeTexture;
+
+    public static Color fillColor = new Color(0f, 0f, 0, 0f);
+    public static Object fillTexture;
     /////////////////////////////////
 
     //Parte para la transparencia/////////////
@@ -137,10 +140,29 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
 
             AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, shapes.get(i).getAlphaComposite());
             g2.setComposite(ac);
-            g2.setColor(shapes.get(i).getStrokeColor());
             g2.setStroke(shapes.get(i).getStroke());
+
+            if ((shapes.get(i).getStrokeTexture() == null))
+            {
+                g2.setColor(shapes.get(i).getStrokeColor());
+            } else
+            {
+                g2.setPaint((Paint) shapes.get(i).getStrokeTexture());
+            }
+
             g2.draw(s);
-            //Si tiene transparencia se la colocamos
+
+            ///////////////////////////////////////////
+            g2.setPaint(shapes.get(i).getFillColor());
+            if ((shapes.get(i).getFillTexture() == null))
+            {
+                g2.setColor(shapes.get(i).getFillColor());
+            } else
+            {
+                g2.setPaint((Paint) shapes.get(i).getFillTexture());
+            }
+            g2.fill(s);
+
             if (shapes.get(i).getSelected())
             {
                 float dash1[] =
@@ -152,15 +174,14 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 g2.setPaint(new Color(0, 80, 157));
                 g2.draw(getSelectedRectangle(shapes.get(i).getShape()));
                 //g2.setStroke(new BasicStroke(1));
-                shapes.get(i).setStrokeColor(strokeColor);
-                shapes.get(i).setStroke(stroke);
-                shapes.get(i).setStrokeTexture(strokeTexture);
 
                 if (primeraVez)
                 {
-                    System.out.println("primera vez");
-                    System.out.println("alpha = " + shapes.get(i).getAlphaComposite());
                     Menu.vSpinner.setValue(shapes.get(i).getAlphaComposite());
+                    strokeColor = shapes.get(i).getStrokeColor();
+                    strokeTexture = shapes.get(i).getStrokeTexture();
+                    fillColor = shapes.get(i).getFillColor();
+                    fillTexture = shapes.get(i).getFillTexture();
                     primeraVez = false;
                 }
 
@@ -172,11 +193,28 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                     g2.setPaint((Paint) shapes.get(i).getStrokeTexture());
                 }
 
+                shapes.get(i).setStrokeColor(strokeColor);
+                shapes.get(i).setStroke(stroke);
+                shapes.get(i).setStrokeTexture(strokeTexture);
                 g2.setStroke(shapes.get(i).getStroke());
                 g2.draw(shapes.get(i).getShape());
                 //g2.fill(shapes.get(i).getShape());
 
                 shapes.get(i).setAlphaComposite(transparent);
+
+                ///////////////////////////////////
+                g2.setPaint(shapes.get(i).getFillColor());
+                if ((shapes.get(i).getFillTexture() == null))
+                {
+                    g2.setColor(shapes.get(i).getFillColor());
+                } else
+                {
+                    g2.setPaint((Paint) shapes.get(i).getFillTexture());
+                }
+                g2.fill(shapes.get(i).getShape());
+
+                shapes.get(i).setFillColor(fillColor);
+                shapes.get(i).setFillTexture(fillTexture);
 
                 repaint();
             }

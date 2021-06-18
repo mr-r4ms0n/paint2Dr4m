@@ -18,20 +18,22 @@ import java.awt.TexturePaint;
  */
 public class MyShape
 {
+
     private Shape shape = null;
     private Object strokeTexture = null;
     private Object fillTexture = null;
     private Color strokeColor = new Color(0, 0, 0);
+    private Color fillColor = new Color(0f, 0f, 0, 0f);
     private Stroke stroke;
     private float alphaComposite = 1f;
     private Boolean selected = false;
-    
+
     public MyShape(Shape shape)
     {
         this.shape = shape;
         this.stroke = new BasicStroke(2);
     }
-    
+
     public Shape getShape()
     {
         return shape;
@@ -49,7 +51,7 @@ public class MyShape
 
     public void setStrokeTexture(Object strokeTexture)
     {
-        if (strokeTexture instanceof TexturePaint )
+        if (strokeTexture instanceof TexturePaint)
         {
             this.strokeTexture = (TexturePaint) strokeTexture;
         } else
@@ -71,7 +73,19 @@ public class MyShape
 
     public void setFillTexture(Object fillTexture)
     {
-        this.fillTexture = fillTexture;
+        if (fillTexture instanceof TexturePaint)
+        {
+            this.fillTexture = (TexturePaint) fillTexture;
+        } else
+        {
+            if (fillTexture instanceof GradientPaint)
+            {
+                this.fillTexture = (GradientPaint) fillTexture;
+            } else
+            {
+                //Color
+            }
+        }
     }
 
     public Color getStrokeColor()
@@ -113,5 +127,21 @@ public class MyShape
     {
         this.selected = selected;
     }
-    
+
+    /**
+     * @return the fillColor
+     */
+    public Color getFillColor()
+    {
+        return fillColor;
+    }
+
+    /**
+     * @param fillColor the fillColor to set
+     */
+    public void setFillColor(Color fillColor)
+    {
+        this.fillColor = fillColor;
+    }
+
 }
