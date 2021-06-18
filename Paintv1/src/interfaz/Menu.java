@@ -120,7 +120,6 @@ public class Menu extends javax.swing.JFrame
         jRRellenoImagen.setEnabled(atr);
         //Transparencia y angulo
         jSTransparencia.setEnabled(atr);
-        jSAngulo.setEnabled(atr);
     }
 
     /**
@@ -159,8 +158,7 @@ public class Menu extends javax.swing.JFrame
         jPEAtributos = new javax.swing.JPanel();
         jSTransparencia = new javax.swing.JSlider();
         JPRotar = new javax.swing.JPanel();
-        jSAngulo = new javax.swing.JSpinner();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         vPnlModosEd = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jBCBasica = new javax.swing.JButton();
@@ -343,7 +341,7 @@ public class Menu extends javax.swing.JFrame
                         .addComponent(jBSelectStrokeAtributo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBSelectStrokeAtributo2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 2, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPEContornoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBSelectStrokeRnd, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -360,7 +358,7 @@ public class Menu extends javax.swing.JFrame
                             .addComponent(jBSelectStrokeAtributo2))
                         .addGap(18, 18, 18)
                         .addComponent(jBSelectStrokeRnd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE))
                     .addGroup(jPEContornoLayout.createSequentialGroup()
                         .addComponent(JPContorno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
@@ -467,29 +465,36 @@ public class Menu extends javax.swing.JFrame
         JPRotar.setBackground(new java.awt.Color(204, 204, 255));
         JPRotar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rotar", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jSAngulo.setModel(new javax.swing.SpinnerNumberModel(0, 0, 360, 1));
+        jLabel8.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
+        jLabel8.setText("Transformar:");
 
-        jLabel3.setText("Angulo");
+        vCBox_AFFINE_TRANFORMATIONS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ninguna", "Mover", "Rotar", "Escalar", "Magia", "Reflejar" }));
+        vCBox_AFFINE_TRANFORMATIONS.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                vCBox_AFFINE_TRANFORMATIONSActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout JPRotarLayout = new javax.swing.GroupLayout(JPRotar);
         JPRotar.setLayout(JPRotarLayout);
         JPRotarLayout.setHorizontalGroup(
             JPRotarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPRotarLayout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSAngulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(JPRotarLayout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(vCBox_AFFINE_TRANFORMATIONS, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         JPRotarLayout.setVerticalGroup(
             JPRotarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPRotarLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(JPRotarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSAngulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGroup(JPRotarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(vCBox_AFFINE_TRANFORMATIONS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -500,10 +505,9 @@ public class Menu extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(JPRotar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPEAtributos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPERelleno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPEContorno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPEAtributos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPERelleno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPEContorno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 12, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -966,7 +970,7 @@ public class Menu extends javax.swing.JFrame
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
 
         jPanel2.add(vpnlFiguras, java.awt.BorderLayout.LINE_START);
@@ -977,7 +981,7 @@ public class Menu extends javax.swing.JFrame
         vPnlDatos.setLayout(vPnlDatosLayout);
         vPnlDatosLayout.setHorizontalGroup(
             vPnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1519, Short.MAX_VALUE)
+            .addGap(0, 1181, Short.MAX_VALUE)
         );
         vPnlDatosLayout.setVerticalGroup(
             vPnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -992,11 +996,11 @@ public class Menu extends javax.swing.JFrame
         javaDraw2DPanelM2.setLayout(javaDraw2DPanelM2Layout);
         javaDraw2DPanelM2Layout.setHorizontalGroup(
             javaDraw2DPanelM2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 827, Short.MAX_VALUE)
+            .addGap(0, 495, Short.MAX_VALUE)
         );
         javaDraw2DPanelM2Layout.setVerticalGroup(
             javaDraw2DPanelM2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 622, Short.MAX_VALUE)
+            .addGap(0, 566, Short.MAX_VALUE)
         );
 
         jPanel2.add(javaDraw2DPanelM2, java.awt.BorderLayout.CENTER);
@@ -1432,6 +1436,11 @@ public class Menu extends javax.swing.JFrame
         operaciones(4);
     }//GEN-LAST:event_jToggleButton15ActionPerformed
 
+    private void vCBox_AFFINE_TRANFORMATIONSActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_vCBox_AFFINE_TRANFORMATIONSActionPerformed
+    {//GEN-HEADEREND:event_vCBox_AFFINE_TRANFORMATIONSActionPerformed
+        //Este cBOx es llamado desde Java2DPanel
+    }//GEN-LAST:event_vCBox_AFFINE_TRANFORMATIONSActionPerformed
+
     public void operaciones(int opType)
     {
         Area s = new Area(); //Area que contenra todas nuestras figuras
@@ -1565,8 +1574,8 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jCTipoBorde;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPEAtributos;
     private javax.swing.JPanel jPEContorno;
     private javax.swing.JPanel jPERelleno;
@@ -1586,7 +1595,6 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JRadioButton jRadioBColor;
     private javax.swing.JRadioButton jRadioBImagen;
     private javax.swing.JRadioButton jRadioGradiente;
-    private javax.swing.JSpinner jSAngulo;
     private javax.swing.JSpinner jSGrosorBorde;
     private javax.swing.JSlider jSTransparencia;
     private javax.swing.JToggleButton jToggleButton11;
@@ -1597,6 +1605,7 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JToggleButton jToggleButton6;
     private javax.swing.JToggleButton jToggleButton8;
     private canvas.JavaDraw2DPanelM javaDraw2DPanelM2;
+    public static final javax.swing.JComboBox<String> vCBox_AFFINE_TRANFORMATIONS = new javax.swing.JComboBox<>();
     private javax.swing.JPanel vPnlAtributos;
     private javax.swing.JPanel vPnlDatos;
     private javax.swing.JPanel vPnlModosEd;

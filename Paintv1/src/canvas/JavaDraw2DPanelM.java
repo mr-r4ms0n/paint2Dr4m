@@ -33,6 +33,7 @@ import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Ellipse2D;
@@ -88,7 +89,6 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     Point selectedPoint;
 
     //Atributos para la configuracion
-    
     //Parte del contorno
     public static Color strokeColor = Color.BLACK;
     public static Stroke stroke = new BasicStroke(2);
@@ -98,6 +98,9 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     //Coordenadas para dibujar el plano cartesiano
     int alto = 1200;
     int ancho = 654;
+
+    //Variables para las tranmformaciones 
+    public static AffineTransform CONFIG_AFFINE_TRANSFORM = new AffineTransform();
 
     public JavaDraw2DPanelM()
     {
@@ -265,92 +268,128 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
         p = ev.getPoint();
         Shape s = null;
 
-        switch (shapeType)
+        if (Menu.vCBox_AFFINE_TRANFORMATIONS.getSelectedIndex() == 0) //Si no hay niguna tranformacion activa entonces es hora de dibujar
         {
-            case RECTANGLE:
-                s = new Rectangle(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case ROUNDRECTANGLE2D:
-                s = new RoundRectangle2D.Float(p1.x, p1.y, p.x - p1.x, p.y - p1.y, 10, 10);
-                break;
-            case ELLIPSE2D:
-                s = new Ellipse2D.Float(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case ARC2D:
-                s = new Arc2D.Float(p1.x, p1.y, p.x - p1.x,
-                        p.y - p1.y,
-                        30, 120, Arc2D.OPEN
-                );
-                break;
-            case LINE2D:
-                s = new Line2D.Float(p1.x, p1.y, p.x, p.y);
-                break;
-            case QUADCURVE2D:
-                if (pointIndex > 1)
-                {
-                    Point p2 = (Point) points.get(0);
-                    s = new QuadCurve2D.Float(p2.x, p2.y, p1.x, p1.y, p.x, p.y);
-                }
-                break;
-            case CUBICCURVE2D:
-                if (pointIndex > 2)
-                {
-                    Point p2 = (Point) points.get(pointIndex - 2);
-                    Point p3 = (Point) points.get(pointIndex - 3);
-                    s = new CubicCurve2D.Float(p3.x, p3.y, p2.x, p2.y,
-                            p1.x, p1.y, p.x, p.y);
-                }
-                break;
-            case POLYGON:
-                if (ev.isShiftDown())
-                {
-                    s = new Polygon();
-                    for (int i = 0; i < pointIndex; i++)
+            switch (shapeType)
+            {
+                case RECTANGLE:
+                    s = new Rectangle(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    break;
+                case ROUNDRECTANGLE2D:
+                    s = new RoundRectangle2D.Float(p1.x, p1.y, p.x - p1.x, p.y - p1.y, 10, 10);
+                    break;
+                case ELLIPSE2D:
+                    s = new Ellipse2D.Float(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    break;
+                case ARC2D:
+                    s = new Arc2D.Float(p1.x, p1.y, p.x - p1.x,
+                            p.y - p1.y,
+                            30, 120, Arc2D.OPEN
+                    );
+                    break;
+                case LINE2D:
+                    s = new Line2D.Float(p1.x, p1.y, p.x, p.y);
+                    break;
+                case QUADCURVE2D:
+                    if (pointIndex > 1)
                     {
-                        ((Polygon) s).addPoint(((Point) points.get(i)).x,
-                                ((Point) points.get(i)).y);
+                        Point p2 = (Point) points.get(0);
+                        s = new QuadCurve2D.Float(p2.x, p2.y, p1.x, p1.y, p.x, p.y);
                     }
-                    ((Polygon) s).addPoint(p.x, p.y);
-                }
-                break;
-            case HEART:
-                s = new C1(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case HOUSE:
-                s = new Casa(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case TRIANGLE:
-                s = new Triangulo(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case DIAMOND:
-                s = new Diamante(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case STAR5:
-                s = new Estrella5Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case STAR4:
-                s = new Estrella4Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case RIGHTARROW:
-                s = new FlechaDer(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case LIGHTNING:
-                s = new Rayo(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case SANDCLOCK:
-                s = new RelojArena(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case STAR6:
-                s = new Estrella6Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case BAT:
-                s = new Murcielago(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case NO_SELECTED:
-                System.out.println("No se dibuja nada");
-                break;
+                    break;
+                case CUBICCURVE2D:
+                    if (pointIndex > 2)
+                    {
+                        Point p2 = (Point) points.get(pointIndex - 2);
+                        Point p3 = (Point) points.get(pointIndex - 3);
+                        s = new CubicCurve2D.Float(p3.x, p3.y, p2.x, p2.y,
+                                p1.x, p1.y, p.x, p.y);
+                    }
+                    break;
+                case POLYGON:
+                    if (ev.isShiftDown())
+                    {
+                        s = new Polygon();
+                        for (int i = 0; i < pointIndex; i++)
+                        {
+                            ((Polygon) s).addPoint(((Point) points.get(i)).x,
+                                    ((Point) points.get(i)).y);
+                        }
+                        ((Polygon) s).addPoint(p.x, p.y);
+                    }
+                    break;
+                case HEART:
+                    s = new C1(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    break;
+                case HOUSE:
+                    s = new Casa(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    break;
+                case TRIANGLE:
+                    s = new Triangulo(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    break;
+                case DIAMOND:
+                    s = new Diamante(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    break;
+                case STAR5:
+                    s = new Estrella5Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    break;
+                case STAR4:
+                    s = new Estrella4Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    break;
+                case RIGHTARROW:
+                    s = new FlechaDer(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    break;
+                case LIGHTNING:
+                    s = new Rayo(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    break;
+                case SANDCLOCK:
+                    s = new RelojArena(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    break;
+                case STAR6:
+                    s = new Estrella6Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    break;
+                case BAT:
+                    s = new Murcielago(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    break;
+                case NO_SELECTED:
+                    System.out.println("No se dibuja nada");
+                    break;
 
+            }
+        } else//Si hay alguna transformacion activa entonces...
+        {
+            CONFIG_AFFINE_TRANSFORM = new AffineTransform();
+            for (int i = 0; i <= shapes.size() - 1; i++)
+            {
+                if (shapes.get(i).getSelected())
+                {
+                    double x0 = shapes.get(i).getShape().getBounds().x + shapes.get(i).getShape().getBounds().width / 2;
+                    double y0 = shapes.get(i).getShape().getBounds().y + shapes.get(i).getShape().getBounds().height / 2;
+                    switch (Menu.vCBox_AFFINE_TRANFORMATIONS.getSelectedIndex())
+                    {
+                        case 1:
+                            CONFIG_AFFINE_TRANSFORM.setToTranslation(p.x - p1.x, p.y - p1.y);
+                            break;
+                        case 2:
+                            CONFIG_AFFINE_TRANSFORM.setToRotation(Math.atan2(p1.y - y0, p1.x - x0) - Math.atan2(p.y - y0, p.x - x0), x0, y0);
+                            break;
+                        case 3:
+                            //getGraphics().translate(0, 0);
+                            double sx = Math.abs((double) (0 - p.x) / (0 - p1.x));
+                            double sy = Math.abs((double) (0 - p.y) / (0 - p1.y));
+                            CONFIG_AFFINE_TRANSFORM.setToScale(sx, sy);
+                            break;
+                        case 4:
+                            double shx = ((double) (p1.x) / (p.x)) - 1;
+                            double shy = ((double) (p1.y) / (p.y)) - 1;
+                            CONFIG_AFFINE_TRANSFORM.setToShear(shx, shy);
+                            break;
+                    }
+                    shapes.get(i).setShape(CONFIG_AFFINE_TRANSFORM.createTransformedShape(shapes.get(i).getShape()));
+                }
+            }
         }
+
         if (s != null)
         {
             MyShape s1 = new MyShape(s);
@@ -373,201 +412,237 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
         //g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setXORMode(Color.white);
         Point p1 = (Point) points.get(pointIndex - 1);
-        switch (shapeType)
+        if (Menu.vCBox_AFFINE_TRANFORMATIONS.getSelectedIndex() == 0) //Si no hay niguna tranformacion activa entonces es hora de dibujar
         {
-            case RECTANGLE:
-                if (p != null)
-                {
+            switch (shapeType)
+            {
+                case RECTANGLE:
+                    if (p != null)
+                    {
+                        g.drawRect(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    }
+                    p = ev.getPoint();
                     g.drawRect(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                }
-                p = ev.getPoint();
-                g.drawRect(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case ROUNDRECTANGLE2D:
-                if (p != null)
+                    break;
+                case ROUNDRECTANGLE2D:
+                    if (p != null)
 
-                {
+                    {
+                        g.drawRoundRect(p1.x, p1.y, p.x - p1.x, p.y - p1.y, 10, 10);
+                    }
+                    p = ev.getPoint();
                     g.drawRoundRect(p1.x, p1.y, p.x - p1.x, p.y - p1.y, 10, 10);
-                }
-                p = ev.getPoint();
-                g.drawRoundRect(p1.x, p1.y, p.x - p1.x, p.y - p1.y, 10, 10);
-                break;
-            case ELLIPSE2D:
-                if (p != null)
-                {
+                    break;
+                case ELLIPSE2D:
+                    if (p != null)
+                    {
+                        g.drawOval(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
+                    }
+                    p = ev.getPoint();
                     g.drawOval(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                }
-                p = ev.getPoint();
-                g.drawOval(p1.x, p1.y, p.x - p1.x, p.y - p1.y);
-                break;
-            case ARC2D:
-                if (p != null)
-                {
+                    break;
+                case ARC2D:
+                    if (p != null)
+                    {
+                        g.drawArc(p1.x, p1.y, p.x - p1.x, p.y - p1.y, 30, 120);
+                    }
+                    p = ev.getPoint();
                     g.drawArc(p1.x, p1.y, p.x - p1.x, p.y - p1.y, 30, 120);
-                }
-                p = ev.getPoint();
-                g.drawArc(p1.x, p1.y, p.x - p1.x, p.y - p1.y, 30, 120);
-                break;
-            case LINE2D:
-            case POLYGON:
-                if (p != null)
-                {
-                    g.drawLine(p1.x, p1.y, p.x, p.y);
-                }
-                p = ev.getPoint();
-                g.drawLine(p1.x, p1.y, p.x, p.y);
-                break;
-            case QUADCURVE2D:
-                if (pointIndex == 1)
-                {
+                    break;
+                case LINE2D:
+                case POLYGON:
                     if (p != null)
                     {
                         g.drawLine(p1.x, p1.y, p.x, p.y);
                     }
                     p = ev.getPoint();
                     g.drawLine(p1.x, p1.y, p.x, p.y);
-                } else
-                {
-                    Point p2 = (Point) points.get(pointIndex - 2);
-                    if (p != null)
+                    break;
+                case QUADCURVE2D:
+                    if (pointIndex == 1)
                     {
-                        g.draw(partialShape);
-                    }
-                    p = ev.getPoint();
-                    partialShape = new QuadCurve2D.Float(p2.x, p2.y,
-                            p1.x, p1.y, p.x, p.y);
-                    g.draw(partialShape);
-                }
-                break;
-            case CUBICCURVE2D:
-                if (pointIndex == 1)
-                {
-                    if (p != null)
-                    {
+                        if (p != null)
+                        {
+                            g.drawLine(p1.x, p1.y, p.x, p.y);
+                        }
+                        p = ev.getPoint();
                         g.drawLine(p1.x, p1.y, p.x, p.y);
-                    }
-                    p = ev.getPoint();
-                    g.drawLine(p1.x, p1.y, p.x, p.y);
-                } else if (pointIndex == 2)
-                {
-
-                    Point p2 = (Point) points.get(pointIndex - 2);
-                    if (p != null)
+                    } else
                     {
+                        Point p2 = (Point) points.get(pointIndex - 2);
+                        if (p != null)
+                        {
+                            g.draw(partialShape);
+                        }
+                        p = ev.getPoint();
+                        partialShape = new QuadCurve2D.Float(p2.x, p2.y,
+                                p1.x, p1.y, p.x, p.y);
                         g.draw(partialShape);
                     }
-                    p = ev.getPoint();
-                    partialShape = new QuadCurve2D.Float(p2.x, p2.y,
-                            p1.x, p1.y, p.x, p.y);
-                    g.draw(partialShape);
-                } else
-                {
-                    Point p2 = (Point) points.get(pointIndex - 2);
-                    Point p3 = (Point) points.get(pointIndex - 3);
-                    if (p != null)
+                    break;
+                case CUBICCURVE2D:
+                    if (pointIndex == 1)
                     {
+                        if (p != null)
+                        {
+                            g.drawLine(p1.x, p1.y, p.x, p.y);
+                        }
+                        p = ev.getPoint();
+                        g.drawLine(p1.x, p1.y, p.x, p.y);
+                    } else if (pointIndex == 2)
+                    {
+
+                        Point p2 = (Point) points.get(pointIndex - 2);
+                        if (p != null)
+                        {
+                            g.draw(partialShape);
+                        }
+                        p = ev.getPoint();
+                        partialShape = new QuadCurve2D.Float(p2.x, p2.y,
+                                p1.x, p1.y, p.x, p.y);
+                        g.draw(partialShape);
+                    } else
+                    {
+                        Point p2 = (Point) points.get(pointIndex - 2);
+                        Point p3 = (Point) points.get(pointIndex - 3);
+                        if (p != null)
+                        {
+                            g.draw(partialShape);
+                        }
+                        p = ev.getPoint();
+                        partialShape = new CubicCurve2D.Float(p3.x, p3.y,
+                                p2.x, p2.y, p1.x, p1.y, p.x, p.y);
                         g.draw(partialShape);
                     }
+                    break;
+                case HEART:
+                    if (p != null)
+                    {
+                        g.draw(new C1(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                    }
                     p = ev.getPoint();
-                    partialShape = new CubicCurve2D.Float(p3.x, p3.y,
-                            p2.x, p2.y, p1.x, p1.y, p.x, p.y);
-                    g.draw(partialShape);
-                }
-                break;
-            case HEART:
-
-                if (p != null)
-                {
                     g.draw(new C1(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                }
-                p = ev.getPoint();
-                g.draw(new C1(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                break;
+                    break;
 
-            case HOUSE:
-
-                if (p != null)
-                {
+                case HOUSE:
+                    if (p != null)
+                    {
+                        g.draw(new Casa(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                    }
+                    p = ev.getPoint();
                     g.draw(new Casa(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                }
-                p = ev.getPoint();
-                g.draw(new Casa(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                break;
+                    break;
 
-            case TRIANGLE:
-                if (p != null)
-                {
+                case TRIANGLE:
+                    if (p != null)
+                    {
+                        g.draw(new Triangulo(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                    }
+                    p = ev.getPoint();
                     g.draw(new Triangulo(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                }
-                p = ev.getPoint();
-                g.draw(new Triangulo(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                break;
-            case DIAMOND:
-                if (p != null)
-                {
+                    break;
+                case DIAMOND:
+                    if (p != null)
+                    {
+                        g.draw(new Diamante(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                    }
+                    p = ev.getPoint();
                     g.draw(new Diamante(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                }
-                p = ev.getPoint();
-                g.draw(new Diamante(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                break;
-            case STAR5:
-                if (p != null)
-                {
+                    break;
+                case STAR5:
+                    if (p != null)
+                    {
+                        g.draw(new Estrella5Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                    }
+                    p = ev.getPoint();
                     g.draw(new Estrella5Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                }
-                p = ev.getPoint();
-                g.draw(new Estrella5Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                break;
-            case STAR4:
-                if (p != null)
-                {
+                    break;
+                case STAR4:
+                    if (p != null)
+                    {
+                        g.draw(new Estrella4Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                    }
+                    p = ev.getPoint();
                     g.draw(new Estrella4Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                }
-                p = ev.getPoint();
-                g.draw(new Estrella4Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                break;
-            case RIGHTARROW:
-                if (p != null)
-                {
+                    break;
+                case RIGHTARROW:
+                    if (p != null)
+                    {
+                        g.draw(new FlechaDer(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                    }
+                    p = ev.getPoint();
                     g.draw(new FlechaDer(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                }
-                p = ev.getPoint();
-                g.draw(new FlechaDer(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                break;
+                    break;
 
-            case LIGHTNING:
-                if (p != null)
-                {
+                case LIGHTNING:
+                    if (p != null)
+                    {
+                        g.draw(new Rayo(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                    }
+                    p = ev.getPoint();
                     g.draw(new Rayo(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                }
-                p = ev.getPoint();
-                g.draw(new Rayo(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                break;
-            case SANDCLOCK:
-                if (p != null)
-                {
+                    break;
+                case SANDCLOCK:
+                    if (p != null)
+                    {
+                        g.draw(new RelojArena(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                    }
+                    p = ev.getPoint();
                     g.draw(new RelojArena(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                }
-                p = ev.getPoint();
-                g.draw(new RelojArena(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                break;
-
-            case STAR6:
-                if (p != null)
-                {
+                    break;
+                case STAR6:
+                    if (p != null)
+                    {
+                        g.draw(new Estrella6Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                    }
+                    p = ev.getPoint();
                     g.draw(new Estrella6Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                }
-                p = ev.getPoint();
-                g.draw(new Estrella6Puntas(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                break;
-            case BAT:
-                if (p != null)
-                {
+                    break;
+                case BAT:
+                    if (p != null)
+                    {
+                        g.draw(new Murcielago(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                    }
+                    p = ev.getPoint();
                     g.draw(new Murcielago(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
+                    break;
+            }
+        } else
+        {
+            for (int i = 0; i <= shapes.size() - 1; i++)
+            {
+                if (shapes.get(i).getSelected())
+                {
+                    double x0 = shapes.get(i).getShape().getBounds().x + shapes.get(i).getShape().getBounds().width / 2;
+                    double y0 = shapes.get(i).getShape().getBounds().y + shapes.get(i).getShape().getBounds().height / 2;
+                    p = ev.getPoint();
+                    switch (Menu.vCBox_AFFINE_TRANFORMATIONS.getSelectedIndex())
+                    {
+                        case 1:
+                            CONFIG_AFFINE_TRANSFORM.setToTranslation(p.x - p1.x, p.y - p1.y);
+                            break;
+                        case 2:
+                            CONFIG_AFFINE_TRANSFORM.setToRotation(Math.atan2(p1.y - y0, p1.x - x0) - Math.atan2(p.y - y0, p.x - x0), x0, y0);
+                            break;
+                        case 3:
+
+                            double sx = Math.abs((double) (0 - p.x) / (0 - p1.x));
+                            double sy = Math.abs((double) (0 - p.y) / (0 - p1.y));
+                            CONFIG_AFFINE_TRANSFORM.setToScale(sx, sy);
+                            break;
+                        case 4:
+                            double shx = ((double) (p1.x - 0) / (p.x - 0)) - 1;
+                            double shy = ((double) (p1.y - 0) / (p.y - 0)) - 1;
+                            CONFIG_AFFINE_TRANSFORM.setToShear(shx, shy);
+                            break;
+                    }
+                    if (p != null)
+                    {
+                        g.draw(CONFIG_AFFINE_TRANSFORM.createTransformedShape(shapes.get(i).getShape()));
+                    }
+                    g.draw(CONFIG_AFFINE_TRANSFORM.createTransformedShape(shapes.get(i).getShape()));
                 }
-                p = ev.getPoint();
-                g.draw(new Murcielago(p1.x, p1.y, p.x - p1.x, p.y - p1.y));
-                break;
+            }
         }
     }
 }
