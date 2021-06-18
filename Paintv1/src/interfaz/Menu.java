@@ -166,7 +166,7 @@ public class Menu extends javax.swing.JFrame
         jPEAtributos = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        vSpinner = new javax.swing.JSpinner();
         JPRotar = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -473,12 +473,12 @@ public class Menu extends javax.swing.JFrame
         jLabel9.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel9.setText("Transparencia");
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.1f)));
-        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener()
+        vSpinner.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.1f)));
+        vSpinner.addChangeListener(new javax.swing.event.ChangeListener()
         {
             public void stateChanged(javax.swing.event.ChangeEvent evt)
             {
-                jSpinner1StateChanged(evt);
+                vSpinnerStateChanged(evt);
             }
         });
 
@@ -496,7 +496,7 @@ public class Menu extends javax.swing.JFrame
                 .addGap(98, 98, 98)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(vSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPEAtributosLayout.setVerticalGroup(
@@ -509,7 +509,7 @@ public class Menu extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPEAtributosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(vSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
         );
 
@@ -1546,11 +1546,11 @@ public class Menu extends javax.swing.JFrame
 
     }//GEN-LAST:event_jButton21ActionPerformed
 
-    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_jSpinner1StateChanged
-    {//GEN-HEADEREND:event_jSpinner1StateChanged
-        panelPaint.transparent = (float) jSpinner1.getValue();
+    private void vSpinnerStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_vSpinnerStateChanged
+    {//GEN-HEADEREND:event_vSpinnerStateChanged
+        panelPaint.transparent = (float) vSpinner.getValue();
         panelPaint.repaint();
-    }//GEN-LAST:event_jSpinner1StateChanged
+    }//GEN-LAST:event_vSpinnerStateChanged
 
     public void operaciones(int opType)
     {
@@ -1712,7 +1712,6 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JRadioButton jRadioBImagen;
     private javax.swing.JRadioButton jRadioGradiente;
     private javax.swing.JSpinner jSGrosorBorde;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JToggleButton jToggleButton11;
     private javax.swing.JToggleButton jToggleButton12;
     private javax.swing.JToggleButton jToggleButton13;
@@ -1724,6 +1723,7 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JPanel vPnlAtributos;
     private javax.swing.JPanel vPnlDatos;
     private javax.swing.JPanel vPnlModosEd;
+    public static javax.swing.JSpinner vSpinner;
     private javax.swing.JPanel vpnlFiguras;
     // End of variables declaration//GEN-END:variables
 }

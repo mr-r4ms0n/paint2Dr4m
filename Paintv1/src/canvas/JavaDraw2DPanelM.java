@@ -105,6 +105,8 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     //Variables para las tranmformaciones 
     public static AffineTransform CONFIG_AFFINE_TRANSFORM = new AffineTransform();
 
+    boolean primeraVez = false; //Esta variable ayuda a que no se sobrescriba a cada rato el valor del shape
+
     public JavaDraw2DPanelM()
     {
         super();
@@ -133,13 +135,12 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
         {
             Shape s = shapes.get(i).getShape();
 
-            //Si tiene transparencia se la colocamos
             AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, shapes.get(i).getAlphaComposite());
             g2.setComposite(ac);
             g2.setColor(shapes.get(i).getStrokeColor());
             g2.setStroke(shapes.get(i).getStroke());
             g2.draw(s);
-
+            //Si tiene transparencia se la colocamos
             if (shapes.get(i).getSelected())
             {
                 float dash1[] =
@@ -154,6 +155,14 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 shapes.get(i).setStrokeColor(strokeColor);
                 shapes.get(i).setStroke(stroke);
                 shapes.get(i).setStrokeTexture(strokeTexture);
+
+                if (primeraVez)
+                {
+                    System.out.println("primera vez");
+                    System.out.println("alpha = " + shapes.get(i).getAlphaComposite());
+                    Menu.vSpinner.setValue(shapes.get(i).getAlphaComposite());
+                    primeraVez = false;
+                }
 
                 if ((shapes.get(i).getStrokeTexture() == null))
                 {
@@ -202,6 +211,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
 
     public void mousePressed(MouseEvent ev)
     {
+        boolean isSeleccion = false;
         if (ev != null)
         {
             points.add(ev.getPoint());
@@ -214,11 +224,13 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
             {
                 //En primer lugar hacemos todas falsas para evitar confusiones
                 setSelectedRentagle();
+
                 for (int i = shapes.size() - 1; i >= 0; i--)
                 {
                     if (shapes.get(i).getShape().contains(selectedPoint))
                     {
                         shapes.get(i).setSelected(true);
+                        isSeleccion = true;
                         break;
                     } else
                     {
@@ -235,9 +247,8 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                         if (shapes.get(i).getShape().contains(selectedPoint))
                         {
                             shapes.get(i).setSelected(true);
-
+                            isSeleccion = true;
                         }
-
                     }
                 }
             }
@@ -247,12 +258,17 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
             {
                 for (int i = shapes.size() - 1; i >= 0; i--)
                 {
-
                     shapes.get(i).setSelected(true);
-
                 }
             }
         }
+
+        if (isSeleccion) //Esto habilita las opciones de edicion al seleccionarse una o varias figuras
+        {
+            primeraVez = true; //Aqui se reinicia siempre el boolean primera vez, lo activo para que entre al caso de primera vez y configure el panel edicion
+            System.out.println("Reinicia p[rimera vez");
+        }
+
         repaint();
     }
 

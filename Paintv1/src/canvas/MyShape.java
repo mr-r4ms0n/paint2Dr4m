@@ -23,7 +23,7 @@ public class MyShape
     private Object fillTexture = null;
     private Color strokeColor = new Color(0, 0, 0);
     private Stroke stroke;
-    private float alphaComposite;
+    private float alphaComposite = 1f;
     private Boolean selected = false;
     
     public MyShape(Shape shape)
