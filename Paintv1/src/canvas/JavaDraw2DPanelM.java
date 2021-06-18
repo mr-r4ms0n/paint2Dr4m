@@ -95,6 +95,9 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
     public static Object strokeTexture = null;
     /////////////////////////////////
 
+    //Parte para la transparencia/////////////
+    public static float transparent = 1.0f;
+
     //Coordenadas para dibujar el plano cartesiano
     int alto = 1200;
     int ancho = 654;
@@ -131,8 +134,8 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
             Shape s = shapes.get(i).getShape();
 
             //Si tiene transparencia se la colocamos
-            //AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, shapes.get(i).getAlphaComposite());
-            //g2.setComposite(ac);
+            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, shapes.get(i).getAlphaComposite());
+            g2.setComposite(ac);
             g2.setColor(shapes.get(i).getStrokeColor());
             g2.setStroke(shapes.get(i).getStroke());
             g2.draw(s);
@@ -164,10 +167,11 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 g2.draw(shapes.get(i).getShape());
                 //g2.fill(shapes.get(i).getShape());
 
+                shapes.get(i).setAlphaComposite(transparent);
+
                 repaint();
             }
         }
-
     }
 
     /**
@@ -396,6 +400,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
         if (s != null)
         {
             MyShape s1 = new MyShape(s);
+            s1.setAlphaComposite(transparent);
             shapes.add(s1);
             points.clear();
             pointIndex = 0;
@@ -647,6 +652,7 @@ public class JavaDraw2DPanelM extends JPanel implements MouseListener, MouseMoti
                 }
             }
         }
+        g.dispose();
     }
 
     public ArrayList<MyShape> getShapes()

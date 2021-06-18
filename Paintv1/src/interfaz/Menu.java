@@ -165,6 +165,8 @@ public class Menu extends javax.swing.JFrame
         jPanel12 = new javax.swing.JPanel();
         jPEAtributos = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jSpinner1 = new javax.swing.JSpinner();
         JPRotar = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -454,9 +456,9 @@ public class Menu extends javax.swing.JFrame
         );
 
         jPEAtributos.setBackground(new java.awt.Color(204, 204, 255));
-        jPEAtributos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transparencia", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPEAtributos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Atributos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jLabel8.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jLabel8.setText("Transformar:");
 
         jCTransformaciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ninguna", "Mover", "Rotar", "Escalar", "Recortar" }));
@@ -468,16 +470,34 @@ public class Menu extends javax.swing.JFrame
             }
         });
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel9.setText("Transparencia");
+
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.1f)));
+        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                jSpinner1StateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPEAtributosLayout = new javax.swing.GroupLayout(jPEAtributos);
         jPEAtributos.setLayout(jPEAtributosLayout);
         jPEAtributosLayout.setHorizontalGroup(
             jPEAtributosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPEAtributosLayout.createSequentialGroup()
-                .addContainerGap(106, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCTransformaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60))
+            .addGroup(jPEAtributosLayout.createSequentialGroup()
+                .addGap(98, 98, 98)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPEAtributosLayout.setVerticalGroup(
             jPEAtributosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -486,7 +506,11 @@ public class Menu extends javax.swing.JFrame
                 .addGroup(jPEAtributosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCTransformaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(jPEAtributosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
         );
 
         JPRotar.setBackground(new java.awt.Color(204, 204, 255));
@@ -1522,6 +1546,12 @@ public class Menu extends javax.swing.JFrame
 
     }//GEN-LAST:event_jButton21ActionPerformed
 
+    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_jSpinner1StateChanged
+    {//GEN-HEADEREND:event_jSpinner1StateChanged
+        panelPaint.transparent = (float) jSpinner1.getValue();
+        panelPaint.repaint();
+    }//GEN-LAST:event_jSpinner1StateChanged
+
     public void operaciones(int opType)
     {
         Area s = new Area(); //Area que contenra todas nuestras figuras
@@ -1661,6 +1691,7 @@ public class Menu extends javax.swing.JFrame
     public static final javax.swing.JComboBox<String> jCTransformaciones = new javax.swing.JComboBox<>();
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPEAtributos;
     private javax.swing.JPanel jPEContorno;
     private javax.swing.JPanel jPERelleno;
@@ -1681,6 +1712,7 @@ public class Menu extends javax.swing.JFrame
     private javax.swing.JRadioButton jRadioBImagen;
     private javax.swing.JRadioButton jRadioGradiente;
     private javax.swing.JSpinner jSGrosorBorde;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JToggleButton jToggleButton11;
     private javax.swing.JToggleButton jToggleButton12;
     private javax.swing.JToggleButton jToggleButton13;
